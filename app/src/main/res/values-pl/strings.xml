@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PBL#7:Roboterapia - Panic Button</string>
+    <string name="action_log_in">Zaloguj się</string>
+    <string name="prompt_username">Nazwa użytkownika</string>
+    <string name="test_prompt">Twoja nazwa użytkownika to: </string>
+</resources>
