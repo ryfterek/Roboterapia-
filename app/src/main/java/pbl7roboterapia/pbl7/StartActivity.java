@@ -1,6 +1,7 @@
 package pbl7roboterapia.pbl7;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,7 +9,9 @@ import android.widget.AutoCompleteTextView;
 
 public class StartActivity extends AppCompatActivity {
 
-    public final static String USERNAME = "pbl7roboterapia.pbl7.USERNAME";
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor sharedEdit;
+    private static final int PREFERENCE_MODE_PRIVATE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +24,11 @@ public class StartActivity extends AppCompatActivity {
         Intent intent = new Intent(this, IdleActivity.class);
         AutoCompleteTextView usernameField = (AutoCompleteTextView) findViewById(R.id.username);
         String username = usernameField.getText().toString();
-        intent.putExtra(USERNAME, username);
+        sharedPref = getSharedPreferences("database",PREFERENCE_MODE_PRIVATE);
+        sharedEdit = sharedPref.edit();
+        sharedEdit.putString("USERNAME", username);
+        sharedEdit.commit();
         startActivity(intent);
+        finish();
     }
 }

@@ -5,10 +5,9 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class IdleActivity extends AppCompatActivity {
+public class AlarmActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPref;
     private static final int PREFERENCE_MODE_PRIVATE = 0;
@@ -16,19 +15,17 @@ public class IdleActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_idle);
+        setContentView(R.layout.activity_alarm);
 
-        TextView textView = (TextView) findViewById(R.id.welcomeText);
-        textView.setTextSize(20);
+        TextView text = (TextView) findViewById(R.id.alarmText);
+        text.setTextSize(20);
         sharedPref = getSharedPreferences("database",PREFERENCE_MODE_PRIVATE);
-        textView.setText(sharedPref.getString("USERNAME", "ERROR"));
+        text.setText("Oh no! "+sharedPref.getString("USERNAME", "ERROR")+", there is an alarm!");
     }
 
     public void Cycle (View view){
-        Intent intent = new Intent(this, AlarmActivity.class);
+        Intent intent = new Intent(this, IdleActivity.class);
         startActivity(intent);
         finish();
     }
-
-
 }

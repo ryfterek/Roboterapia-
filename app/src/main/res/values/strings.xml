@@ -4,6 +4,6 @@
     <!-- Strings related to login -->
     <string name="prompt_username">Username</string>
     <string name="action_log_in">Log in</string>
-    <string name="test_prompt">Your username is: </string>
+    <string name="test_prompt">Your username is:\u0020</string>
 
 </resources>
