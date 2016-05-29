@@ -7,8 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 
-public class StartActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
+    /**SharedPreference is the most compact way to save variables on device's memory */
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor sharedEdit;
     private static final int PREFERENCE_MODE_PRIVATE = 0;
@@ -16,7 +17,7 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start);
+        setContentView(R.layout.activity_login);
     }
 
     /** Called when the user clicks the Log in button */
@@ -27,6 +28,7 @@ public class StartActivity extends AppCompatActivity {
         sharedPref = getSharedPreferences("database",PREFERENCE_MODE_PRIVATE);
         sharedEdit = sharedPref.edit();
         sharedEdit.putString("USERNAME", username);
+        sharedEdit.putBoolean("LOGGED", true);
         sharedEdit.commit();
         startActivity(intent);
         finish();

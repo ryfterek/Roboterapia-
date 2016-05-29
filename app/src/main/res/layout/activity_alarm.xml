@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Alarm"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -10,7 +11,7 @@
     tools:context="pbl7roboterapia.pbl7.AlarmActivity">
 
     <Button
-        android:background = "@drawable/roundbutton"
+        android:background = "@drawable/alarmroundbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -24,6 +25,7 @@
         android:id="@+id/alarmText"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp" />
+        android:layout_marginTop="60dp"
+        android:textAlignment="center" />
 
 </RelativeLayout>

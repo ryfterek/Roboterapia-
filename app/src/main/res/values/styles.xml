@@ -20,9 +20,25 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
-    <style name="Idle" parent="AppTheme" />
-    <item name="colorPrimary">@color/colorPrimary</item>
-    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="colorAccent">@color/colorAccent</item>
+    <style name="Idle" parent="AppTheme">
+        <item name="colorPrimary">@color/idlePrimary</item>
+        <item name="colorPrimaryDark">@color/idlePrimaryDark</item>
+        <item name="colorAccent">@color/idleAccent</item>
+    </style>
+
+    <style name="Alarm" parent="AppTheme">
+        <item name="colorPrimary">@color/alarmPrimary</item>
+        <item name="colorPrimaryDark">@color/alarmPrimaryDark</item>
+        <item name="colorAccent">@color/alarmAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

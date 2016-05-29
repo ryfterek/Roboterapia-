@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 public class AlarmActivity extends AppCompatActivity {
 
+    /**SharedPreference is the most compact way to save variables on device's memory */
     private SharedPreferences sharedPref;
     private static final int PREFERENCE_MODE_PRIVATE = 0;
 
@@ -17,12 +18,18 @@ public class AlarmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
 
-        TextView text = (TextView) findViewById(R.id.alarmText);
-        text.setTextSize(20);
+        /** Opening SharedPreferences for future use */
         sharedPref = getSharedPreferences("database",PREFERENCE_MODE_PRIVATE);
-        text.setText("Oh no! "+sharedPref.getString("USERNAME", "ERROR")+", there is an alarm!");
+
+        /** Updating the textView to contain the USERNAME string variable */
+        TextView textView = (TextView) findViewById(R.id.alarmText);
+        String login = sharedPref.getString("USERNAME", "ERROR");
+        String text = (getResources().getString(R.string.prompt_calm)+login+"! "+getResources().getString(R.string.prompt_incoming));
+        textView.setText(text);
+        textView.setTextSize(getResources().getDimension(R.dimen.text_size));
     }
 
+    /** Cycling to the next state, i.e. alarm */
     public void Cycle (View view){
         Intent intent = new Intent(this, IdleActivity.class);
         startActivity(intent);
