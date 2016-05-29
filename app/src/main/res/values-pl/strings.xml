@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PBL#7:Roboterapia - Panic Button</string>
+
+    <!-- Strings for LoginActivity -->
+    <string name="prompt_username">Pseudonim</string>
     <string name="action_log_in">Zaloguj się</string>
-    <string name="prompt_username">Nazwa użytkownika</string>
-    <string name="test_prompt">Twoja nazwa użytkownika to: </string>
+
+    <!-- Strings for IdleActivity -->
+    <string name="prompt_welcome">Dzień dobry,\u0020</string>
+    <string name="prompt_all_ok">Wszystko w porządku?</string>
+
+    <!-- Strings for AlarmActivity -->
+    <string name="prompt_calm">Tylko spokojnie\u0020</string>
+    <string name="prompt_incoming">Pomoc jest już w drodze.</string>
+
+    <!-- Strings for Menus & Settings -->
+    <string name="menu_settings_text">Zmień pseudonim</string>
+
 </resources>
