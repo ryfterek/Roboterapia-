@@ -8,6 +8,7 @@
     <!-- Strings for IdleActivity -->
     <string name="prompt_welcome">Hello,\u0020</string>
     <string name="prompt_all_ok">Is everything all right?</string>
+    <string name="toast_login">Logged in as\u0020</string>
 
     <!-- Strings for AlarmActivity -->
     <string name="prompt_calm">Keep calm\u0020</string>

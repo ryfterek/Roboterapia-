@@ -1,5 +1,6 @@
 package pbl7roboterapia.pbl7;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class IdleActivity extends AppCompatActivity {
 
@@ -26,11 +28,14 @@ public class IdleActivity extends AppCompatActivity {
         /** Opening SharedPreferences for future use */
         sharedPref = getSharedPreferences("database",PREFERENCE_MODE_PRIVATE);
 
-        /** Checking if the user had logged in already in the past. If not, redirecting to login screen */
+        /** Checking if the user had logged in already in the past. If not, redirecting to login screen. If yes, prompting a toast message*/
         if (!(sharedPref.getBoolean("LOGGED", false))){
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
+        }else{
+            CharSequence toast = getResources().getString(R.string.toast_login) + sharedPref.getString("USERNAME", "ERROR");
+            Toast.makeText(getApplicationContext(), toast, Toast.LENGTH_SHORT).show();
         }
 
         /** Updating the textView to contain the USERNAME string variable */

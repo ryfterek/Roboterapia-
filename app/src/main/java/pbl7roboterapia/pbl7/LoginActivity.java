@@ -18,6 +18,14 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        sharedPref = getSharedPreferences("database",PREFERENCE_MODE_PRIVATE);
+        sharedEdit = sharedPref.edit();
+        sharedEdit.putString("broker", "test.mosquitto.org");
+        sharedEdit.putString("topic", "/hello/hello");
+        sharedEdit.commit();
+
+        Intent svc = new Intent(this, MQTTService.class);
+        startService(svc);
     }
 
     /** Called when the user clicks the Log in button */
