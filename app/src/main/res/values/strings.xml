@@ -16,4 +16,8 @@
     <!-- Strings for Menus & Settings -->
     <string name="menu_settings_text">Change Login</string>
 
+    <string name="ConnectedToast">Connected to server</string>
+    <string name="MessageToast">New message!</string>
+
+
 </resources>

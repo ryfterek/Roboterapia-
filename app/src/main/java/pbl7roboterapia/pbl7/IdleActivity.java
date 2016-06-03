@@ -26,13 +26,6 @@ public class IdleActivity extends AppCompatActivity {
         /** Opening SharedPreferences for future use */
         sharedPref = getSharedPreferences("database",PREFERENCE_MODE_PRIVATE);
 
-        /** Checking if the user had logged in already in the past. If not, redirecting to login screen */
-        if (!(sharedPref.getBoolean("LOGGED", false))){
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-            finish();
-        }
-
         /** Updating the textView to contain the USERNAME string variable */
         TextView textView = (TextView) findViewById(R.id.welcomeText);
         String login = sharedPref.getString("USERNAME", "ERROR");
