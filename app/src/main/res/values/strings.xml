@@ -16,8 +16,16 @@
     <!-- Strings for Menus & Settings -->
     <string name="menu_settings_text">Change Login</string>
 
-    <string name="ConnectedToast">Connected to server</string>
-    <string name="MessageToast">New message!</string>
+    <!-- Strings Notifications -->
+    <string name="ongoing_text">We are here to help you.</string>
+    
+    <!-- All kind of toasts -->
+    <string name="error_client_toast">Initialisation error</string>
+    <string name="connect_toast">Connected to server</string>
+    <string name="error_connect_toast">Could not connect server</string>
+    <string name="subscribe_toast">Subscribed to topic</string>
+    <string name="error_subscribe_toast">Could not subscribe to topic</string>
+    <string name="message_toast">New message!</string>
 
 
 </resources>
