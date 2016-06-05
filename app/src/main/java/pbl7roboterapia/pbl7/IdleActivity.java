@@ -117,7 +117,9 @@ public class IdleActivity extends AppCompatActivity {
 
     /** Cycling to the next state, i.e. alarm */
     public void Cycle (View view){
-        mservice.callHelp();
+        String payload = "the payload";
+
+        mservice.callHelp(payload);
         Intent intent = new Intent(this, AlarmActivity.class);
         startActivity(intent);
         finish();

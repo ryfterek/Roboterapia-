@@ -32,6 +32,12 @@
         <item name="colorAccent">@color/alarmAccent</item>
     </style>
 
+    <style name="NeedHelp" parent="AppTheme">
+        <item name="colorPrimary">@color/needHelpPrimary</item>
+        <item name="colorPrimaryDark">@color/needHelpPrimaryDark</item>
+        <item name="colorAccent">@color/needHelpAccent</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

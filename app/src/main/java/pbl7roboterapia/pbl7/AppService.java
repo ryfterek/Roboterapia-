@@ -255,8 +255,7 @@ public class AppService extends Service {
         }
     }
 
-    public void callHelp() {
-        String payload = "the payload";
+    public void callHelp(String payload) {
         try {
             MqttMessage message = new MqttMessage(payload.getBytes("UTF-8"));
             client.publish(TOPIC, message);
