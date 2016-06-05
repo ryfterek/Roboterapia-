@@ -3,7 +3,12 @@ package pbl7roboterapia.pbl7;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
@@ -37,6 +42,7 @@ public class AppService extends Service {
     private final int       PORT = 1883;
     private final String    ADDR = "tcp://" + HOST + ":" + PORT;
     private final String    TOPIC = "foo/Santiago/Simon";
+    private final int       QOS = 0;
 
     /** Variables for notifications */
     private NotificationCompat.Builder ongoingNotification;
@@ -44,8 +50,11 @@ public class AppService extends Service {
     private final static int ongoingNotiID = 7001;
     private final static int pushNotiID = 7002;
 
-    /** MQTT client declared as global to grant acces for all methods */
+    /** MQTT client declared as global to grant access for all methods */
     private MqttAsyncClient client = null;
+
+    /** Global WiFi listener */
+    WiFiReceiver wifi = new WiFiReceiver();
 
     /** Nothing interesting here */
     @Override
@@ -65,6 +74,18 @@ public class AppService extends Service {
     /** Actual magic happens in this method */
     synchronized void handleStart()
     {
+        /** Initial WiFi check */
+        ConnectivityManager cm = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (activeNetwork.getType() != ConnectivityManager.TYPE_WIFI) {
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_noWiFi_toast), Toast.LENGTH_LONG).show();
+            //return;
+        }
+
+    /** Initializing WiFi status listener */
+/*        IntentFilter filter = new IntentFilter();
+        registerReceiver(wifi, filter);*/
+
         /** Initializing a MQTT client */
         try {
             client = new MqttAsyncClient(ADDR, MqttAsyncClient.generateClientId(), null);
@@ -90,7 +111,7 @@ public class AppService extends Service {
 
         /** Subscribing MQTT client to the topic */
         try {
-            client.subscribe(TOPIC, 0);
+            client.subscribe(TOPIC, QOS);
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.subscribe_toast), Toast.LENGTH_SHORT).show();
             connectionStatus = MQTTConnectionStatus.SUBSCRIBED;
         }
@@ -107,7 +128,7 @@ public class AppService extends Service {
             ongoingNotification.setContentText(getResources().getString(R.string.ongoing_text));
             ongoingNotification.setOngoing(true);
 
-            Intent intentNoti = new Intent(this, WelcomeActivity.class);
+            Intent intentNoti = new Intent(this, MainActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intentNoti, PendingIntent.FLAG_UPDATE_CURRENT);
             ongoingNotification.setContentIntent(pendingIntent);
 
@@ -127,15 +148,12 @@ public class AppService extends Service {
             unsubToken.setActionCallback(new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
-                    // The subscription could successfully be removed from the client
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.unsubscribe_toast), Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onFailure(IMqttToken asyncActionToken,
                                       Throwable exception) {
-                    // some error occurred, this is very unlikely as even if the client
-                    // did not had a subscription to the topic the unsubscribe action
-                    // will be successfully
                 }
             });
         } catch (MqttException e) {
@@ -147,18 +165,25 @@ public class AppService extends Service {
             disconToken.setActionCallback(new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
-                    // we are now successfully disconnected
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.disconnect_toast), Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onFailure(IMqttToken asyncActionToken,
                                       Throwable exception) {
-                    // something went wrong, but probably we are disconnected anyway
                 }
             });
         } catch (MqttException e) {
             e.printStackTrace();
         }
+
+        /** Dismissing the ongoing notification */
+        NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        nm.cancel(ongoingNotiID);
+
+        /** Dismissing WiFi listener */
+/*        unregisterReceiver(wifi);
+        Toast.makeText(getApplicationContext(), "...", Toast.LENGTH_SHORT).show();*/
     }
 
     @Override

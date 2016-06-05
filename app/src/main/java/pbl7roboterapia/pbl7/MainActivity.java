@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class WelcomeActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     /**SharedPreference is the most compact way to save variables on device's memory */
     private SharedPreferences sharedPref;
@@ -21,9 +21,11 @@ public class WelcomeActivity extends AppCompatActivity {
         /** Opening SharedPreferences for future use */
         sharedPref = getSharedPreferences("database",PREFERENCE_MODE_PRIVATE);
 
+        ServiceCheck serviceCheck = new ServiceCheck(this);
+
         /** Checking if the AppService already running in background */
         /** Starting our internal service which will handle the notifications & signals from MQTT Service */
-        if(isMyServiceRunning(AppService.class) == false) {
+        if(!serviceCheck.isMyServiceRunning(AppService.class)) {
             Intent service = new Intent(this, AppService.class);
             startService(service);
         }
@@ -40,16 +42,5 @@ public class WelcomeActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-    }
-
-    /** Method checking if the service is running already in the background, found at http://stackoverflow.com/questions/600207/how-to-check-if-a-service-is-running-on-android */
-    private boolean isMyServiceRunning(Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                return true;
-            }
-        }
-        return false;
     }
 }

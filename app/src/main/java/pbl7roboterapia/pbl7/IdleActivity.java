@@ -2,6 +2,7 @@ package pbl7roboterapia.pbl7;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
@@ -11,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class IdleActivity extends AppCompatActivity {
 
@@ -45,10 +47,38 @@ public class IdleActivity extends AppCompatActivity {
     /** Handling overlay menu item press */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-        finish();
+        switch (item.getItemId()){
+            case R.id.settings:
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            break;
+            case R.id.shutdown:
+                ServiceCheck serviceCheck = new ServiceCheck(this);
+
+                if (serviceCheck.isMyServiceRunning(AppService.class) == true) {
+                    Intent service = new Intent(this, AppService.class);
+                    stopService(service);
+                }else{
+                    Intent service = new Intent(this, AppService.class);
+                    startService(service);
+                }
+
+            break;
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+        MenuItem toggler = menu.findItem(R.id.shutdown);
+        ServiceCheck serviceCheck = new ServiceCheck(this);
+        if (serviceCheck.isMyServiceRunning(AppService.class) == true) {
+            toggler.setTitle(getResources().getString(R.string.menu_disconnect_text));
+        }else{
+            toggler.setTitle(getResources().getString(R.string.menu_connect_text));
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
 
     /** Cycling to the next state, i.e. alarm */

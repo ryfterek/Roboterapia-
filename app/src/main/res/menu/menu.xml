@@ -7,5 +7,9 @@
         android:id="@+id/settings"
         android:title="@string/menu_settings_text"
         app:showAsAction="never"></item>
+    <item
+        android:id="@+id/shutdown"
+        android:title="@string/menu_connect_text"
+        app:showAsAction="never"></item>
 
 </menu>
