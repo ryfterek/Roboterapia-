@@ -11,5 +11,4 @@
         android:id="@+id/shutdown"
         android:title="@string/menu_connect_text"
         app:showAsAction="never"></item>
-
 </menu>

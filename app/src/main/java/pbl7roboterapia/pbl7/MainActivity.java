@@ -21,15 +21,6 @@ public class MainActivity extends AppCompatActivity {
         /** Opening SharedPreferences for future use */
         sharedPref = getSharedPreferences("database",PREFERENCE_MODE_PRIVATE);
 
-        ServiceCheck serviceCheck = new ServiceCheck(this);
-
-        /** Checking if the AppService already running in background */
-        /** Starting our internal service which will handle the notifications & signals from MQTT Service */
-        if(!serviceCheck.isMyServiceRunning(AppService.class)) {
-            Intent service = new Intent(this, AppService.class);
-            startService(service);
-        }
-
         /** Checking if the user had logged in already in the past. If not, redirecting to login screen */
         if (!(sharedPref.getBoolean("LOGGED", false))){
             Intent intent = new Intent(this, LoginActivity.class);
@@ -38,6 +29,17 @@ public class MainActivity extends AppCompatActivity {
         }
         /** If yes, redirecting to idle state screen */
         else{
+
+            ServiceCheck serviceCheck = new ServiceCheck(this);
+
+            /** Checking if the AppService already running in background */
+            /** Starting our internal service which will handle the notifications & signals from MQTT Service */
+            if(!serviceCheck.isMyServiceRunning(AppService.class)) {
+                Intent service = new Intent(this, AppService.class);
+                startService(service);
+            }
+
+            /** Redirecting */
             Intent intent = new Intent(this, IdleActivity.class);
             startActivity(intent);
             finish();

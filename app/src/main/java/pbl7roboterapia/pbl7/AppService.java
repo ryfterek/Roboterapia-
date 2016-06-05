@@ -1,5 +1,8 @@
 package pbl7roboterapia.pbl7;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -7,8 +10,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.Binder;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
@@ -23,6 +29,8 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
+import java.io.UnsupportedEncodingException;
+
 /** Based on http://www.hivemq.com/blog/mqtt-client-library-enyclopedia-paho-android-service */
 
 public class AppService extends Service {
@@ -36,13 +44,16 @@ public class AppService extends Service {
     }
     private MQTTConnectionStatus connectionStatus = MQTTConnectionStatus.INITIAL;
 
-
     /** Hardcoding the MQTT broker's details here */
     private final String    HOST = "iot.eclipse.org";
     private final int       PORT = 1883;
     private final String    ADDR = "tcp://" + HOST + ":" + PORT;
     private final String    TOPIC = "foo/Santiago/Simon";
     private final int       QOS = 0;
+
+    /** EXTRAS for intents */
+
+    public final static String EXTRA_DIALOG_REASON = "pbl7roboterapia.pbl7.DIALOG_REASON";
 
     /** Variables for notifications */
     private NotificationCompat.Builder ongoingNotification;
@@ -53,8 +64,9 @@ public class AppService extends Service {
     /** MQTT client declared as global to grant access for all methods */
     private MqttAsyncClient client = null;
 
-    /** Global WiFi listener */
-    WiFiReceiver wifi = new WiFiReceiver();
+
+    /****************************************************************************************************/
+
 
     /** Nothing interesting here */
     @Override
@@ -75,16 +87,32 @@ public class AppService extends Service {
     synchronized void handleStart()
     {
         /** Initial WiFi check */
-        ConnectivityManager cm = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        if (activeNetwork.getType() != ConnectivityManager.TYPE_WIFI) {
-            Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_noWiFi_toast), Toast.LENGTH_LONG).show();
-            //return;
-        }
+        try {
+            ConnectivityManager cm = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
 
-    /** Initializing WiFi status listener */
-/*        IntentFilter filter = new IntentFilter();
-        registerReceiver(wifi, filter);*/
+            if (activeNetwork == null) {
+
+                /** THIS I TRY TO DO A GODDAMN DIALOG */
+
+                // NO CONNECTION
+
+/*                Toast.makeText(getApplicationContext(), "NO CONNECTION", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, DialogActivity.class);
+                intent.putExtra(EXTRA_DIALOG_REASON, 1);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);*/
+
+            } else if (activeNetwork.getType() != ConnectivityManager.TYPE_WIFI) {
+                // CONNECTED NOT BY WIFI
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_noWiFi_toast), Toast.LENGTH_LONG).show();
+                //return;
+            }
+        }
+        catch (Exception e)
+        {
+
+        }
 
         /** Initializing a MQTT client */
         try {
@@ -180,17 +208,6 @@ public class AppService extends Service {
         /** Dismissing the ongoing notification */
         NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         nm.cancel(ongoingNotiID);
-
-        /** Dismissing WiFi listener */
-/*        unregisterReceiver(wifi);
-        Toast.makeText(getApplicationContext(), "...", Toast.LENGTH_SHORT).show();*/
-    }
-
-    @Override
-    public IBinder onBind(Intent intent)
-    {
-        // TODO: Return the communication channel to the service.
-        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     public class ServerCallback implements MqttCallback
@@ -198,16 +215,20 @@ public class AppService extends Service {
         public void connectionLost(Throwable cause)
         {
             // TODO: Handle loss of connection
+            Toast.makeText(getApplicationContext(), "This is Toast", Toast.LENGTH_SHORT).show();
         }
         /** Here is handled the arrival of a message from broker */
         public void messageArrived(String topic, MqttMessage message)
         {
             /** Setting up a one time notification to pop up at message arrival */
+            long[] pattern = { 0,500,500,500};
             pushNotification = new NotificationCompat.Builder(getApplicationContext());
             pushNotification.setSmallIcon(R.mipmap.ic_launcher);
             pushNotification.setWhen(System.currentTimeMillis());
             pushNotification.setContentTitle(topic);
             pushNotification.setContentText(message.toString());
+            pushNotification.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+            pushNotification.setVibrate(pattern);
             pushNotification.setAutoCancel(true);
 
             Intent intentNoti = new Intent(getApplicationContext(), IdleActivity.class);
@@ -219,6 +240,28 @@ public class AppService extends Service {
         }
         public void deliveryComplete(IMqttDeliveryToken token)
         {
+        }
+    }
+
+    @Override
+    public IBinder onBind(Intent intent)
+    {
+        return new LocalBinder();
+    }
+
+    public class LocalBinder extends Binder {
+        public AppService getServerInstance() {
+            return AppService.this;
+        }
+    }
+
+    public void callHelp() {
+        String payload = "the payload";
+        try {
+            MqttMessage message = new MqttMessage(payload.getBytes("UTF-8"));
+            client.publish(TOPIC, message);
+        } catch (UnsupportedEncodingException | MqttException e) {
+            e.printStackTrace();
         }
     }
 }

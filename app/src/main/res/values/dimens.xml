@@ -5,5 +5,5 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <!-- Text size in a special unit -->
-    <dimen name="text_size">6sp</dimen>
+    <dimen name="text_size">7sp</dimen>
 </resources>
