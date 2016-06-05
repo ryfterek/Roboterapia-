@@ -63,9 +63,11 @@ public class IdleActivity extends AppCompatActivity {
 
                 if (serviceCheck.isMyServiceRunning(AppService.class) == true) {
                     Intent service = new Intent(this, AppService.class);
+                    unbindService(mConnection);
                     stopService(service);
                 }else{
                     Intent service = new Intent(this, AppService.class);
+                    bindService(service, mConnection, BIND_AUTO_CREATE);
                     startService(service);
                 }
 
