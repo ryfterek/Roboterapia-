@@ -73,6 +73,7 @@ public class IdleActivity extends AppCompatActivity {
             case R.id.shutdown:
                 if (serviceCheck.isMyServiceRunning(AppService.class)) {
                     unbindService(mConnection);
+                    serviceBounded = false;
                     stopService(service);
                 }
                 finish();
