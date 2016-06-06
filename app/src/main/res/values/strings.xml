@@ -23,7 +23,14 @@
 
     <!-- Strings for Dialogs -->
     <string name="no_connection_title">Oh snap!</string>
-    <string name="no_connection_body">Seems like your phone has no active connection</string>
+    <string name="no_connection_body">Seems like your phone is not connected with our server. Connect to Roboterapia WiFi and try again.</string>
+    <string name="no_connection_positive">Turn on WiFi</string>
+    <string name="no_connection_negative">Close App</string>
+
+    <string name="fail_title">Oh snap!</string>
+    <string name="fail_body">Seems like something went wrong during setup. Lets try again, shall we?</string>
+    <string name="fail_positive">Try again</string>
+    <string name="fail_negative">Close App</string>
 
     <!-- All kind of toasts -->
     <string name="error_noWiFi_toast">No WiFi connection - please connect to Roboterapia Router</string>

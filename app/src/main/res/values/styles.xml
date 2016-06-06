@@ -6,27 +6,31 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:alertDialogTheme">@style/Dialogs</item>
     </style>
 
     <style name="Idle" parent="AppTheme">
         <item name="colorPrimary">@color/idlePrimary</item>
         <item name="colorPrimaryDark">@color/idlePrimaryDark</item>
         <item name="colorAccent">@color/idleAccent</item>
+        <item name="android:alertDialogTheme">@style/Dialogs</item>
     </style>
 
     <style name="Alarm" parent="AppTheme">
         <item name="colorPrimary">@color/alarmPrimary</item>
         <item name="colorPrimaryDark">@color/alarmPrimaryDark</item>
         <item name="colorAccent">@color/alarmAccent</item>
+        <item name="android:alertDialogTheme">@style/Dialogs</item>
     </style>
 
     <style name="NeedHelp" parent="AppTheme">
         <item name="colorPrimary">@color/needHelpPrimary</item>
         <item name="colorPrimaryDark">@color/needHelpPrimaryDark</item>
         <item name="colorAccent">@color/needHelpAccent</item>
+        <item name="android:alertDialogTheme">@style/Dialogs</item>
     </style>
 
-    <style name="Dialogs" parent="AppTheme">
+    <style name="Dialogs" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">@color/dialogButtons</item>
         <item name="android:textColorPrimary">@color/dialogText</item>
         <item name="android:background">@color/dialogBackground</item>
@@ -38,6 +42,7 @@
         <item name="android:windowBackground">@null</item>
         <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
         <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
+        <item name="android:alertDialogTheme">@style/Dialogs</item>
     </style>
 
     <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">

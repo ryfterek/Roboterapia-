@@ -114,8 +114,10 @@ public class AppService extends Service {
 
             } else if (activeNetwork.getType() != ConnectivityManager.TYPE_WIFI) {
                 // CONNECTED NOT BY WIFI
-                Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_noWiFi_toast), Toast.LENGTH_LONG).show();
-                //return;
+/*                Intent intent = new Intent(this, DialogActivity.class);
+                intent.putExtra(EXTRA_DIALOG_REASON, 1);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);*/
             }
         }
         catch (Exception e)
@@ -173,6 +175,10 @@ public class AppService extends Service {
             nm.notify(ongoingNotiID, ongoingNotification.build());
         }else{
             // TODO: Setup failure has to be handled somehow.
+            Intent intent = new Intent(this, DialogActivity.class);
+            intent.putExtra(EXTRA_DIALOG_REASON, 2);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         }
     }
 
