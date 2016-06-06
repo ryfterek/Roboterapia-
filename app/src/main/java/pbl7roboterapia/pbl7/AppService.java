@@ -40,7 +40,8 @@ public class AppService extends Service {
         INITIAL,
         CREATED,
         CONNECTED,
-        SUBSCRIBED
+        SUBSCRIBED,
+        DAMAGED
     }
     private MQTTConnectionStatus connectionStatus = MQTTConnectionStatus.INITIAL;
 
@@ -96,12 +97,10 @@ public class AppService extends Service {
                 /** THIS I TRY TO DO A GODDAMN DIALOG */
 
                 // NO CONNECTION
-
-/*                Toast.makeText(getApplicationContext(), "NO CONNECTION", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(this, DialogActivity.class);
                 intent.putExtra(EXTRA_DIALOG_REASON, 1);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);*/
+                startActivity(intent);
 
             } else if (activeNetwork.getType() != ConnectivityManager.TYPE_WIFI) {
                 // CONNECTED NOT BY WIFI
