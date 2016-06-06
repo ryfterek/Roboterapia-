@@ -114,10 +114,10 @@ public class AppService extends Service {
 
             } else if (activeNetwork.getType() != ConnectivityManager.TYPE_WIFI) {
                 // CONNECTED NOT BY WIFI
-/*                Intent intent = new Intent(this, DialogActivity.class);
+                Intent intent = new Intent(this, DialogActivity.class);
                 intent.putExtra(EXTRA_DIALOG_REASON, 1);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);*/
+                startActivity(intent);
             }
         }
         catch (Exception e)
