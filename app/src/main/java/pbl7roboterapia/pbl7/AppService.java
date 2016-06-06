@@ -1,20 +1,13 @@
 package pbl7roboterapia.pbl7;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.SystemClock;
@@ -114,10 +107,10 @@ public class AppService extends Service {
 
             } else if (activeNetwork.getType() != ConnectivityManager.TYPE_WIFI) {
                 // CONNECTED NOT BY WIFI
-                Intent intent = new Intent(this, DialogActivity.class);
+/*                Intent intent = new Intent(this, DialogActivity.class);
                 intent.putExtra(EXTRA_DIALOG_REASON, 1);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                startActivity(intent);*/
             }
         }
         catch (Exception e)
@@ -186,6 +179,7 @@ public class AppService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        /** Unsubscribing */
         try {
             IMqttToken unsubToken = client.unsubscribe(TOPIC);
             unsubToken.setActionCallback(new IMqttActionListener() {
@@ -203,6 +197,7 @@ public class AppService extends Service {
             e.printStackTrace();
         }
 
+        /** Disconnecting */
         try {
             IMqttToken disconToken = client.disconnect();
             disconToken.setActionCallback(new IMqttActionListener() {
@@ -225,18 +220,32 @@ public class AppService extends Service {
         nm.cancel(ongoingNotiID);
     }
 
+    /** Method used to push a message to MQTT server */
+    public void publishMessage(int opcode) {
+
+        sharedPref = getSharedPreferences("database",PREFERENCE_MODE_PRIVATE);
+        String payload = opcode+":"+sharedPref.getString("USERNAME", "ERROR");
+
+        try {
+            MqttMessage message = new MqttMessage(payload.getBytes("UTF-8"));
+            client.publish(TOPIC, message);
+        } catch (UnsupportedEncodingException | MqttException e) {
+            e.printStackTrace();
+        }
+    }
+
     public class ServerCallback implements MqttCallback
     {
-        public void connectionLost(Throwable cause)
-        {
+        public void connectionLost(Throwable cause) {
             // TODO: Handle loss of connection
             Toast.makeText(getApplicationContext(), "This is Toast", Toast.LENGTH_SHORT).show();
         }
+
         /** Here is handled the arrival of a message from broker */
         public void messageArrived(String topic, MqttMessage message)
         {
             /** Setting up a one time notification to pop up at message arrival */
-            long[] pattern = { 0,500,500,500};
+/*            long[] pattern = { 0,500,500,500};
             pushNotification = new NotificationCompat.Builder(getApplicationContext());
             pushNotification.setSmallIcon(R.mipmap.ic_launcher);
             pushNotification.setWhen(System.currentTimeMillis());
@@ -251,7 +260,10 @@ public class AppService extends Service {
             pushNotification.setContentIntent(pendingIntent);
 
             NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            nm.notify(pushNotiID, pushNotification.build());
+            nm.notify(pushNotiID, pushNotification.build());*/
+
+            HandleMessage handleMessage = new HandleMessage(getApplicationContext());
+            handleMessage.handle(message.toString());
         }
         public void deliveryComplete(IMqttDeliveryToken token)
         {
@@ -267,19 +279,6 @@ public class AppService extends Service {
     public class LocalBinder extends Binder {
         public AppService getServerInstance() {
             return AppService.this;
-        }
-    }
-
-    public void callHelp() {
-
-        sharedPref = getSharedPreferences("database",PREFERENCE_MODE_PRIVATE);
-        String payload = "0;"+sharedPref.getString("USERNAME", "ERROR");
-
-        try {
-            MqttMessage message = new MqttMessage(payload.getBytes("UTF-8"));
-            client.publish(TOPIC, message);
-        } catch (UnsupportedEncodingException | MqttException e) {
-            e.printStackTrace();
         }
     }
 }

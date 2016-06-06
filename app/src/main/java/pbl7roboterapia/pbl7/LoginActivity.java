@@ -22,7 +22,6 @@ public class LoginActivity extends AppCompatActivity {
 
     /** Called when the user clicks the Log in button */
     public void LogIn (View view) {
-        Intent intent = new Intent(this, MainActivity.class);
         AutoCompleteTextView usernameField = (AutoCompleteTextView) findViewById(R.id.username);
         String username = usernameField.getText().toString();
         sharedPref = getSharedPreferences("database",PREFERENCE_MODE_PRIVATE);
@@ -30,6 +29,9 @@ public class LoginActivity extends AppCompatActivity {
         sharedEdit.putString("USERNAME", username);
         sharedEdit.putBoolean("LOGGED", true);
         sharedEdit.commit();
+
+        /** Getting back to the MainActivity */
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }

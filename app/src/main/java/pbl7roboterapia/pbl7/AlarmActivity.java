@@ -11,6 +11,7 @@ public class AlarmActivity extends AppCompatActivity {
 
     /**SharedPreference is the most compact way to save variables on device's memory */
     private SharedPreferences sharedPref;
+    private SharedPreferences.Editor sharedEdit;
     private static final int PREFERENCE_MODE_PRIVATE = 0;
 
     @Override
@@ -31,6 +32,11 @@ public class AlarmActivity extends AppCompatActivity {
 
     /** Cycling to the next state, i.e. alarm */
     public void Cycle (View view){
+        sharedEdit = sharedPref.edit();
+        sharedEdit.putBoolean("SENDER", false);
+        sharedEdit.putString("STATE", "NEEDHELP");
+        sharedEdit.apply();
+
         Intent intent = new Intent(this, IdleActivity.class);
         startActivity(intent);
         finish();

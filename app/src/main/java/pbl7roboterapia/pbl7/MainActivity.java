@@ -1,11 +1,11 @@
 package pbl7roboterapia.pbl7;
 
-import android.app.ActivityManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+/** Default Activity being opened on icon tap. Check if a user has already provided login and if AppService is running*/
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,11 +29,9 @@ public class MainActivity extends AppCompatActivity {
         }
         /** If yes, redirecting to idle state screen */
         else{
-
             ServiceCheck serviceCheck = new ServiceCheck(this);
-
-            /** Checking if the AppService already running in background */
-            /** Starting our internal service which will handle the notifications & signals from MQTT Service */
+            /** Checking if the AppService already running in background if not
+            * Starting our internal service which will handle the notifications & signals from MQTT Service */
             if(!serviceCheck.isMyServiceRunning(AppService.class)) {
                 Intent service = new Intent(this, AppService.class);
                 startService(service);

@@ -5,17 +5,13 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.IBinder;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.SpannedString;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class IdleActivity extends AppCompatActivity {
 
@@ -23,6 +19,8 @@ public class IdleActivity extends AppCompatActivity {
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor sharedEdit;
     private static final int PREFERENCE_MODE_PRIVATE = 0;
+
+    /** Global variables used along the Activity */
     boolean serviceBounded;
     AppService mservice;
 
@@ -83,6 +81,7 @@ public class IdleActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /** Binding with AppService */
     @Override
     protected void onStart() {
         super.onStart();
@@ -90,19 +89,21 @@ public class IdleActivity extends AppCompatActivity {
         bindService(mIntent, mConnection, BIND_AUTO_CREATE);
     };
 
+    /** Binding with AppService */
     ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceDisconnected(ComponentName name) {
-            Toast.makeText(IdleActivity.this, "Service is disconnected", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(IdleActivity.this, "Service is disconnected", Toast.LENGTH_SHORT).show();
             serviceBounded = false;
         }
         public void onServiceConnected(ComponentName name, IBinder service) {
-            Toast.makeText(IdleActivity.this, "Service is connected", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(IdleActivity.this, "Service is connected", Toast.LENGTH_SHORT).show();
             serviceBounded = true;
             AppService.LocalBinder mLocalBinder = (AppService.LocalBinder)service;
             mservice = mLocalBinder.getServerInstance();
         }
     };
 
+    /** Unbidning from AppService */
     @Override
     protected void onStop() {
         super.onStop();
@@ -112,7 +113,7 @@ public class IdleActivity extends AppCompatActivity {
         }
     };
 
-    /** Cycling to the next state, i.e. alarm */
+    /** Cycling to the <NEXT STATE> & sending a message to MQTT broker*/
     public void Cycle (View view){
 
         sharedEdit = sharedPref.edit();
@@ -120,7 +121,7 @@ public class IdleActivity extends AppCompatActivity {
         sharedEdit.putString("STATE", "NEEDHELP");
         sharedEdit.apply();
 
-        mservice.callHelp();
+        mservice.publishMessage(0);
         Intent intent = new Intent(this, AlarmActivity.class);
         startActivity(intent);
         finish();

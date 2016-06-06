@@ -20,6 +20,8 @@
 
     <!-- Strings for Notifications -->
     <string name="ongoing_text">We are here to help you.</string>
+    <string name="notification_title_alarm">\u0020needs your help!</string>
+    <string name="notification_body_alarm">Tap to volunteer.</string>
 
     <!-- Strings for Dialogs -->
     <string name="no_connection_title">Oh snap!</string>

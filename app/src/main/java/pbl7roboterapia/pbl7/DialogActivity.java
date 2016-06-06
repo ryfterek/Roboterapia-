@@ -8,12 +8,14 @@ import android.os.Bundle;
 
 public class DialogActivity extends Activity {
 
+    /** Dummy activity used to open Dialog messages starting from AppService */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dialog);
 
-        if(getIntent().getIntExtra(AppService.EXTRA_DIALOG_REASON, 0) == 1){
+        /** WiFi is turned off */
+        if (getIntent().getIntExtra(AppService.EXTRA_DIALOG_REASON, 0) == 1){
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this, R.style.Dialogs);
             dialogBuilder.setCancelable(false);
             dialogBuilder.setTitle(getResources().getString(R.string.no_connection_title));
@@ -35,6 +37,8 @@ public class DialogActivity extends Activity {
             });
             AlertDialog dialog = dialogBuilder.create();
             dialog.show();
+
+        /** Something went wrong during MQTT setup */
         }else if (getIntent().getIntExtra(AppService.EXTRA_DIALOG_REASON, 0) == 2){
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this, R.style.Dialogs);
             dialogBuilder.setCancelable(false);
@@ -58,6 +62,8 @@ public class DialogActivity extends Activity {
             });
             AlertDialog dialog = dialogBuilder.create();
             dialog.show();
+        } else if (false){
+
         }
     }
 }
