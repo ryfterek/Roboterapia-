@@ -24,6 +24,10 @@ public class IdleActivity extends AppCompatActivity {
     boolean serviceBounded;
     AppService mservice;
 
+
+    //comment
+    int it = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
