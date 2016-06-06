@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 /** Default Activity being opened on icon tap. Check if a user has already provided login and if AppService is running*/
 
@@ -38,9 +39,18 @@ public class MainActivity extends AppCompatActivity {
             }
 
             /** Redirecting */
-            Intent intent = new Intent(this, IdleActivity.class);
-            startActivity(intent);
-            finish();
+            switch (States.STATES.valueOf(sharedPref.getString("STATE","IDLE"))){
+                case IDLE:
+                    Intent idleIntent = new Intent(this, IdleActivity.class);
+                    startActivity(idleIntent);
+                    finish();
+                    break;
+                case ALARM:
+                    Intent alarmIntent = new Intent(this, AlarmActivity.class);
+                    startActivity(alarmIntent);
+                    finish();
+                    break;
+            }
         }
     }
 }

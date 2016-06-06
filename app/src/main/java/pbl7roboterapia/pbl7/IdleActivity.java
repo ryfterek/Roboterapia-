@@ -122,11 +122,11 @@ public class IdleActivity extends AppCompatActivity {
 
         sharedEdit = sharedPref.edit();
         sharedEdit.putBoolean("SENDER", true);
-        sharedEdit.putString("STATE", "NEEDHELP");
+        sharedEdit.putString("STATE", States.STATES.ALARM.name());
         sharedEdit.apply();
 
         mservice.publishMessage(0);
-        Intent intent = new Intent(this, AlarmActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }

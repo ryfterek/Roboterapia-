@@ -33,12 +33,17 @@ public class HandleMessage {
 
         /** Opening SharedPreferences for future use */
         sharedPref = context.getSharedPreferences("database",PREFERENCE_MODE_PRIVATE);
+        sharedEdit = sharedPref.edit();
 
         String[] details = message.split(":");
 
-        switch (details[0]){
+        switch (details[0]) {
             case "0":
                 if (!sharedPref.getBoolean("SENDER", true)) {
+                    sharedEdit.putString("SIGNIFICANTOTHER", details[1]);
+                    sharedEdit.putString("STATE",States.STATES.ALARM.name());
+                    sharedEdit.apply();
+
                     long[] pattern = {0, 500, 500, 500};
                     pushNotification = new NotificationCompat.Builder(context);
                     pushNotification.setSmallIcon(R.mipmap.ic_launcher);
@@ -50,7 +55,32 @@ public class HandleMessage {
                     pushNotification.setOngoing(true);
                     pushNotification.setAutoCancel(true);
 
-                    Intent intentNoti = new Intent(context, AlarmActivity.class);
+                    Intent intentNoti = new Intent(context, MainActivity.class);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intentNoti, PendingIntent.FLAG_UPDATE_CURRENT);
+                    pushNotification.setContentIntent(pendingIntent);
+
+                    NotificationManager nm = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+                    nm.notify(pushNotiID, pushNotification.build());
+
+                }
+                break;
+            case "1":
+                if (!details[1].equals(sharedPref.getString("USERNAME", "ERROR"))) {
+                    sharedEdit.putString("STATE", States.STATES.IDLE.name());
+                    sharedEdit.apply();
+
+                    long[] pattern = {0, 500, 500, 500};
+                    pushNotification = new NotificationCompat.Builder(context);
+                    pushNotification.setSmallIcon(R.mipmap.ic_launcher);
+                    pushNotification.setWhen(System.currentTimeMillis());
+                    pushNotification.setContentTitle("Everything is alright");
+                    pushNotification.setContentText("Don't worry :)");
+                    pushNotification.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+                    pushNotification.setVibrate(pattern);
+                    pushNotification.setOngoing(true);
+                    pushNotification.setAutoCancel(true);
+
+                    Intent intentNoti = new Intent(context, MainActivity.class);
                     PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intentNoti, PendingIntent.FLAG_UPDATE_CURRENT);
                     pushNotification.setContentIntent(pendingIntent);
 
@@ -58,8 +88,6 @@ public class HandleMessage {
                     nm.notify(pushNotiID, pushNotification.build());
                 }
                 break;
-
         }
-
     }
 }

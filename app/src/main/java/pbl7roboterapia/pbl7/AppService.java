@@ -51,9 +51,7 @@ public class AppService extends Service {
 
     /** Variables for notifications */
     private NotificationCompat.Builder ongoingNotification;
-    private NotificationCompat.Builder pushNotification;
     private final static int ongoingNotiID = 7001;
-    private final static int pushNotiID = 7002;
 
     /** MQTT client declared as global to grant access for all methods */
     private MqttAsyncClient client = null;
@@ -87,7 +85,7 @@ public class AppService extends Service {
         /** Initial SharedPref values reset */
         sharedPref = getSharedPreferences("database",PREFERENCE_MODE_PRIVATE);
         sharedEdit = sharedPref.edit();
-        sharedEdit.putString("STATE", "IDLE");
+        sharedEdit.putString("STATE", States.STATES.IDLE.name());
         sharedEdit.putBoolean("SENDER", false);
         sharedEdit.apply();
         Toast.makeText(getApplicationContext(), "App reset and ready", Toast.LENGTH_LONG).show();

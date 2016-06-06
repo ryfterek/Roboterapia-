@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
         sharedEdit = sharedPref.edit();
         sharedEdit.putString("USERNAME", username);
         sharedEdit.putBoolean("LOGGED", true);
-        sharedEdit.commit();
+        sharedEdit.apply();
 
         /** Getting back to the MainActivity */
         Intent intent = new Intent(this, MainActivity.class);
