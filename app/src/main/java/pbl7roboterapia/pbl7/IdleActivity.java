@@ -116,7 +116,7 @@ public class IdleActivity extends AppCompatActivity {
 
         sharedPref = getSharedPreferences("database",PREFERENCE_MODE_PRIVATE);
         String login = sharedPref.getString("USERNAME", "ERROR");
-        String payload = login;
+        String payload = login+" is going to die!";
 
         mservice.callHelp(payload);
         Intent intent = new Intent(this, AlarmActivity.class);

@@ -231,7 +231,7 @@ public class AppService extends Service {
             pushNotification.setVibrate(pattern);
             pushNotification.setAutoCancel(true);
 
-            Intent intentNoti = new Intent(getApplicationContext(), IdleActivity.class);
+            Intent intentNoti = new Intent(getApplicationContext(), MainActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intentNoti, PendingIntent.FLAG_UPDATE_CURRENT);
             pushNotification.setContentIntent(pendingIntent);
 
