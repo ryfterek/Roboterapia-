@@ -15,6 +15,10 @@
     <color name="needHelpPrimary">#FF0000</color>
     <color name="needHelpPrimaryDark">#B40404</color>
     <color name="needHelpAccent">#04B404</color>
+    
+    <color name="dialogBackground">#ffffff</color>
+    <color name="dialogText">#37474f</color>
+    <color name="dialogButtons">#546e7a</color>
 
     <color name="black_overlay">#66000000</color>
     <color name="black">#000000</color>

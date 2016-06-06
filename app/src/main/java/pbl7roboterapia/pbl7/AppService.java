@@ -42,7 +42,6 @@ public class AppService extends Service {
         CREATED,
         CONNECTED,
         SUBSCRIBED,
-        DAMAGED
     }
     private MQTTConnectionStatus connectionStatus = MQTTConnectionStatus.INITIAL;
 
