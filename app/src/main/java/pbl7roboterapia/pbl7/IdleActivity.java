@@ -21,6 +21,7 @@ public class IdleActivity extends AppCompatActivity {
 
     /**SharedPreference is the most compact way to save variables on device's memory */
     private SharedPreferences sharedPref;
+    private SharedPreferences.Editor sharedEdit;
     private static final int PREFERENCE_MODE_PRIVATE = 0;
     boolean serviceBounded;
     AppService mservice;
@@ -114,11 +115,12 @@ public class IdleActivity extends AppCompatActivity {
     /** Cycling to the next state, i.e. alarm */
     public void Cycle (View view){
 
-        sharedPref = getSharedPreferences("database",PREFERENCE_MODE_PRIVATE);
-        String login = sharedPref.getString("USERNAME", "ERROR");
-        String payload = login+" is going to die!";
+        sharedEdit = sharedPref.edit();
+        sharedEdit.putBoolean("SENDER", true);
+        sharedEdit.putString("STATE", "NEEDHELP");
+        sharedEdit.apply();
 
-        mservice.callHelp(payload);
+        mservice.callHelp();
         Intent intent = new Intent(this, AlarmActivity.class);
         startActivity(intent);
         finish();

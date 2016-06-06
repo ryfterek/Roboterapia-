@@ -10,6 +10,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -65,6 +66,10 @@ public class AppService extends Service {
     /** MQTT client declared as global to grant access for all methods */
     private MqttAsyncClient client = null;
 
+    /**Shared preferences variables to store sender flags and operation codes */
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor sharedEdit;
+    private static final int PREFERENCE_MODE_PRIVATE = 0;
 
     /****************************************************************************************************/
 
@@ -87,14 +92,20 @@ public class AppService extends Service {
     /** Actual magic happens in this method */
     synchronized void handleStart()
     {
+        /** Initial SharedPref values reset */
+        sharedPref = getSharedPreferences("database",PREFERENCE_MODE_PRIVATE);
+        sharedEdit = sharedPref.edit();
+        sharedEdit.putString("STATE", "IDLE");
+        sharedEdit.putBoolean("SENDER", false);
+        sharedEdit.apply();
+        Toast.makeText(getApplicationContext(), "App reset and ready", Toast.LENGTH_LONG).show();
+
         /** Initial WiFi check */
         try {
             ConnectivityManager cm = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
 
             if (activeNetwork == null) {
-
-                /** THIS I TRY TO DO A GODDAMN DIALOG */
 
                 // NO CONNECTION
                 Intent intent = new Intent(this, DialogActivity.class);
@@ -254,7 +265,11 @@ public class AppService extends Service {
         }
     }
 
-    public void callHelp(String payload) {
+    public void callHelp() {
+
+        sharedPref = getSharedPreferences("database",PREFERENCE_MODE_PRIVATE);
+        String payload = "0;"+sharedPref.getString("USERNAME", "ERROR");
+
         try {
             MqttMessage message = new MqttMessage(payload.getBytes("UTF-8"));
             client.publish(TOPIC, message);
