@@ -15,8 +15,8 @@
 
     <!-- Strings for Menus & Settings -->
     <string name="menu_settings_text">Change Login</string>
-    <string name="menu_connect_text">Connect</string>
-    <string name="menu_disconnect_text">Disconnect</string>
+    <string name="menu_reconnect_text">Reconnect</string>
+    <string name="menu_shutdown_text">Shutdown</string>
 
     <!-- Strings for Notifications -->
     <string name="ongoing_text">We are here to help you.</string>

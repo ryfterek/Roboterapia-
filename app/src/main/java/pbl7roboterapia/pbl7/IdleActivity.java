@@ -52,40 +52,33 @@ public class IdleActivity extends AppCompatActivity {
     /** Handling overlay menu item press */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        Intent service = new Intent(this, AppService.class);
+        ServiceCheck serviceCheck = new ServiceCheck(this);
+
         switch (item.getItemId()){
             case R.id.settings:
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 finish();
             break;
-            case R.id.shutdown:
-                ServiceCheck serviceCheck = new ServiceCheck(this);
-
-                if (serviceCheck.isMyServiceRunning(AppService.class) == true) {
-                    Intent service = new Intent(this, AppService.class);
+            case R.id.reconnect:
+                if (serviceCheck.isMyServiceRunning(AppService.class)) {
                     unbindService(mConnection);
                     stopService(service);
-                }else{
-                    Intent service = new Intent(this, AppService.class);
-                    bindService(service, mConnection, BIND_AUTO_CREATE);
-                    startService(service);
                 }
-
+                startService(service);
+                bindService(service, mConnection, BIND_AUTO_CREATE);
+            break;
+            case R.id.shutdown:
+                if (serviceCheck.isMyServiceRunning(AppService.class)) {
+                    unbindService(mConnection);
+                    stopService(service);
+                }
+                finish();
             break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu){
-        MenuItem toggler = menu.findItem(R.id.shutdown);
-        ServiceCheck serviceCheck = new ServiceCheck(this);
-        if (serviceCheck.isMyServiceRunning(AppService.class) == true) {
-            toggler.setTitle(getResources().getString(R.string.menu_disconnect_text));
-        }else{
-            toggler.setTitle(getResources().getString(R.string.menu_connect_text));
-        }
-        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
