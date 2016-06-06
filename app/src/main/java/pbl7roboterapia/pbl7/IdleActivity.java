@@ -112,7 +112,10 @@ public class IdleActivity extends AppCompatActivity {
 
     /** Cycling to the next state, i.e. alarm */
     public void Cycle (View view){
-        String payload = "the payload";
+
+        sharedPref = getSharedPreferences("database",PREFERENCE_MODE_PRIVATE);
+        String login = sharedPref.getString("USERNAME", "ERROR");
+        String payload = login;
 
         mservice.callHelp(payload);
         Intent intent = new Intent(this, AlarmActivity.class);
