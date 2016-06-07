@@ -29,11 +29,33 @@ public class AlarmActivity extends AppCompatActivity {
         sharedPref = getSharedPreferences("database",PREFERENCE_MODE_PRIVATE);
 
         /** Updating the textView to contain the USERNAME string variable */
-        TextView textView = (TextView) findViewById(R.id.alarmText);
-        String login = sharedPref.getString("USERNAME", "ERROR");
-        String text = (getResources().getString(R.string.prompt_calm)+login+"! "+getResources().getString(R.string.prompt_incoming));
-        textView.setText(text);
-        textView.setTextSize(getResources().getDimension(R.dimen.text_size));
+        TextView mainTextView = (TextView) findViewById(R.id.mainAlarmText);
+        String text = (getResources().getString(R.string.prompt_calm)+sharedPref.getString("USERNAME", "ERROR")+"! "+getResources().getString(R.string.prompt_incoming));
+        mainTextView.setText(text);
+        mainTextView.setTextSize(getResources().getDimension(R.dimen.text_size));
+
+
+        /** Deciding how to fill the strings below the button*/
+        TextView volunteerOneText = (TextView) findViewById(R.id.volunteerOneText);
+        TextView volunteerTwoText = (TextView) findViewById(R.id.volunteerTwoText);
+        String textOne, textTwo;
+
+        if (sharedPref.getString("VOLUNTEER1", "NULL").equals("NULL")){
+            textOne = getResources().getString(R.string.prompt_waiting);
+        }else{
+            textOne = (sharedPref.getString("VOLUNTEER1", "NULL")+getResources().getString(R.string.prompt_volunteer));
+        }
+        volunteerOneText.setText(textOne);
+        volunteerOneText.setTextSize(getResources().getDimension(R.dimen.text_size));
+
+        if (sharedPref.getString("VOLUNTEER2", "NULL").equals("NULL")){
+            textTwo = "";
+        }else{
+            textTwo = (sharedPref.getString("VOLUNTEER2", "NULL")+getResources().getString(R.string.prompt_volunteer));
+        }
+        volunteerTwoText.setText(textTwo);
+        volunteerTwoText.setTextSize(getResources().getDimension(R.dimen.text_size));
+
     }
 
     /** Binding with AppService */
@@ -73,6 +95,8 @@ public class AlarmActivity extends AppCompatActivity {
         sharedEdit = sharedPref.edit();
         sharedEdit.putBoolean("SENDER", false);
         sharedEdit.putString("STATE", States.STATES.IDLE.name());
+        sharedEdit.putString("VOLUNTEER1", "NULL");
+        sharedEdit.putString("VOLUNTEER2", "NULL");
         sharedEdit.apply();
 
         mservice.publishMessage(1);

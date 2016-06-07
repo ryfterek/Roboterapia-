@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.support.v4.app.NotificationCompat;
+import android.widget.Toast;
 
 /**
  * Created by Szymon on 2016-06-06.
@@ -44,7 +45,7 @@ public class HandleMessage {
                     sharedEdit.putString("STATE",States.STATES.NEEDED.name());
                     sharedEdit.apply();
 
-                    long[] pattern = {0, 500, 500, 500};
+                    long[] pattern = {0, 100, 150, 100, 150, 100, 500, 400, 150, 400, 150, 400, 500, 100, 150, 100, 150, 100}; // SOS
                     pushNotification = new NotificationCompat.Builder(context);
                     pushNotification.setSmallIcon(R.mipmap.ic_launcher);
                     pushNotification.setWhen(System.currentTimeMillis());
@@ -73,12 +74,12 @@ public class HandleMessage {
                     sharedEdit.putString("STATE", States.STATES.IDLE.name());
                     sharedEdit.apply();
 
-                    long[] pattern = {0, 500, 500, 500};
+                    long[] pattern = {0, 400, 150, 400, 150, 400, 500, 400, 150, 100, 150, 400}; //OK
                     pushNotification = new NotificationCompat.Builder(context);
                     pushNotification.setSmallIcon(R.mipmap.ic_launcher);
                     pushNotification.setWhen(System.currentTimeMillis());
-                    pushNotification.setContentTitle("Everything is alright");
-                    pushNotification.setContentText("Don't worry :)");
+                    pushNotification.setContentTitle(context.getResources().getString(R.string.notification_body_idle));
+                    pushNotification.setContentText(context.getResources().getString(R.string.notification_body_idle));
                     pushNotification.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
                     pushNotification.setVibrate(pattern);
                     pushNotification.setOngoing(true);
@@ -97,7 +98,37 @@ public class HandleMessage {
                 }
                 break;
             case "2":
-                //TODO inform the sender that help is actually going
+                if (sharedPref.getBoolean("SENDER", true)) {
+
+                    if(sharedPref.getString("VOLUNTEER1", "NULL").equals("NULL")){
+                        sharedEdit.putString("VOLUNTEER1", details[1]);
+                        sharedEdit.apply();
+                    }else if (sharedPref.getString("VOLUNTEER2", "NULL").equals("NULL")){
+                        sharedEdit.putString("VOLUNTEER2", details[1]);
+                        sharedEdit.apply();
+                    }
+
+                    long[] pattern = {0, 500, 500, 500};
+                    pushNotification = new NotificationCompat.Builder(context);
+                    pushNotification.setSmallIcon(R.mipmap.ic_launcher);
+                    pushNotification.setWhen(System.currentTimeMillis());
+                    pushNotification.setContentTitle(details[1]+context.getResources().getString(R.string.notification_title_volunteer));
+                    pushNotification.setContentText(context.getResources().getString(R.string.notification_body_volunteer));
+                    pushNotification.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+                    pushNotification.setVibrate(pattern);
+                    pushNotification.setAutoCancel(true);
+
+                    Intent intentNoti = new Intent(context, MainActivity.class);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intentNoti, PendingIntent.FLAG_UPDATE_CURRENT);
+                    pushNotification.setContentIntent(pendingIntent);
+
+                    NotificationManager nm = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+                    nm.notify(pushNotiID, pushNotification.build());
+
+                    Intent dialogIntent = new Intent(context, MainActivity.class);
+                    dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(dialogIntent);
+                }
                 break;
         }
     }

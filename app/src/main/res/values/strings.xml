@@ -11,7 +11,9 @@
 
     <!-- Strings for AlarmActivity -->
     <string name="prompt_calm">Keep calm\u0020</string>
-    <string name="prompt_incoming">Help is already on its way.</string>
+    <string name="prompt_incoming">We have alarmed everybody.</string>
+    <string name="prompt_waiting">Waiting for a volunteer.</string>
+    <string name="prompt_volunteer">\u0020is coming to help.</string>
 
     <!-- Strings for NeededActivity -->
     <string name="prompt_warning">Attention!\u0020</string>
@@ -29,6 +31,10 @@
     <string name="ongoing_text">We are here to help you.</string>
     <string name="notification_title_alarm">\u0020needs your help!</string>
     <string name="notification_body_alarm">Tap to volunteer.</string>
+    <string name="notification_title_idle">Everything is alright now.</string>
+    <string name="notification_body_idle">Don\'t worry and have a nice day.</string>
+    <string name="notification_title_volunteer">\u0020is coming to help.</string>
+    <string name="notification_body_volunteer">Keep calm.</string>
 
     <!-- Strings for Dialogs -->
     <string name="no_connection_title">Oh snap!</string>

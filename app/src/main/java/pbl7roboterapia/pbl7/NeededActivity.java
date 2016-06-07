@@ -74,6 +74,7 @@ public class NeededActivity extends AppCompatActivity {
 
         sharedEdit = sharedPref.edit();
         sharedEdit.putString("STATE", States.STATES.VOLUNTEER.name());
+        sharedEdit.putBoolean("VOLUNTEER", true);
         sharedEdit.apply();
 
         mservice.publishMessage(2);

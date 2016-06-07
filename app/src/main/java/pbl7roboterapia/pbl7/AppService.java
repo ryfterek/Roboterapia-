@@ -87,7 +87,10 @@ public class AppService extends Service {
         sharedEdit = sharedPref.edit();
         sharedEdit.putString("STATE", States.STATES.IDLE.name());
         sharedEdit.putBoolean("SENDER", false);
-        sharedEdit.putString("SIGNIFICANTOTHER", "ERROR");
+        sharedEdit.putBoolean("VOLUNTEER", false);
+        sharedEdit.putString("SIGNIFICANTOTHER", "NULL");
+        sharedEdit.putString("VOLUNTEER1", "NULL");
+        sharedEdit.putString("VOLUNTEER2", "NULL");
         sharedEdit.apply();
         Toast.makeText(getApplicationContext(), "App reset and ready", Toast.LENGTH_LONG).show();
 
@@ -243,24 +246,7 @@ public class AppService extends Service {
         /** Here is handled the arrival of a message from broker */
         public void messageArrived(String topic, MqttMessage message)
         {
-            /** Setting up a one time notification to pop up at message arrival */
-/*            long[] pattern = { 0,500,500,500};
-            pushNotification = new NotificationCompat.Builder(getApplicationContext());
-            pushNotification.setSmallIcon(R.mipmap.ic_launcher);
-            pushNotification.setWhen(System.currentTimeMillis());
-            pushNotification.setContentTitle(topic);
-            pushNotification.setContentText(message.toString());
-            pushNotification.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-            pushNotification.setVibrate(pattern);
-            pushNotification.setAutoCancel(true);
-
-            Intent intentNoti = new Intent(getApplicationContext(), MainActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intentNoti, PendingIntent.FLAG_UPDATE_CURRENT);
-            pushNotification.setContentIntent(pendingIntent);
-
-            NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            nm.notify(pushNotiID, pushNotification.build());*/
-
+            /** Asking external method to handle the arrival of the message */
             HandleMessage handleMessage = new HandleMessage(getApplicationContext());
             handleMessage.handle(message.toString());
         }

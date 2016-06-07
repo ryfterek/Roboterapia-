@@ -28,17 +28,16 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-        /** If yes, redirecting to idle state screen */
         else{
-            ServiceCheck serviceCheck = new ServiceCheck(this);
             /** Checking if the AppService already running in background if not
             * Starting our internal service which will handle the notifications & signals from MQTT Service */
+            ServiceCheck serviceCheck = new ServiceCheck(this);
             if(!serviceCheck.isMyServiceRunning(AppService.class)) {
                 Intent service = new Intent(this, AppService.class);
                 startService(service);
             }
 
-            /** Redirecting */
+            /** Redirecting to the correct Activity based on the state of the device*/
             switch (States.STATES.valueOf(sharedPref.getString("STATE","IDLE"))){
                 case IDLE:
                     Intent idleIntent = new Intent(this, IdleActivity.class);
