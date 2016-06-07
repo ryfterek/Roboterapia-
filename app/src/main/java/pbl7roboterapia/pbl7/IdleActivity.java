@@ -2,16 +2,19 @@ package pbl7roboterapia.pbl7;
 
 import android.app.NotificationManager;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.IBinder;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class IdleActivity extends AppCompatActivity {
@@ -24,6 +27,7 @@ public class IdleActivity extends AppCompatActivity {
     /** Global variables used along the Activity */
     boolean serviceBounded;
     AppService mservice;
+    Vibrator vibe;
 
 
     @Override
@@ -34,12 +38,17 @@ public class IdleActivity extends AppCompatActivity {
         /** Opening SharedPreferences for future use */
         sharedPref = getSharedPreferences("database",PREFERENCE_MODE_PRIVATE);
 
+        /** Creating vibrator <GIGGLE> */
+        vibe = (Vibrator) getSystemService(VIBRATOR_SERVICE) ;
+
         /** Updating the textView to contain the USERNAME string variable */
         TextView textView = (TextView) findViewById(R.id.welcomeText);
         String login = sharedPref.getString("USERNAME", "ERROR");
         String text = getResources().getString(R.string.prompt_welcome)+login+"! "+getResources().getString(R.string.prompt_all_ok);
         textView.setText(text);
         textView.setTextSize(getResources().getDimension(R.dimen.text_size));
+
+        findViewById(R.id.idleButton).setOnLongClickListener(listener);
     }
 
     /** Enabling an overlay menu */
@@ -56,6 +65,7 @@ public class IdleActivity extends AppCompatActivity {
 
         Intent service = new Intent(this, AppService.class);
         ServiceCheck serviceCheck = new ServiceCheck(this);
+        NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         switch (item.getItemId()){
             case R.id.settings:
@@ -68,12 +78,12 @@ public class IdleActivity extends AppCompatActivity {
                     unbindService(mConnection);
                     stopService(service);
                 }
+                nm.cancel(7002);
                 startService(service);
                 bindService(service, mConnection, BIND_AUTO_CREATE);
             break;
             case R.id.shutdown:
                 if (serviceCheck.isMyServiceRunning(AppService.class)) {
-                    NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
                     nm.cancel(7002);
                     unbindService(mConnection);
                     serviceBounded = false;
@@ -118,7 +128,26 @@ public class IdleActivity extends AppCompatActivity {
     };
 
     /** Cycling to the <NEXT STATE> & sending a message to MQTT broker*/
-    public void Cycle (View view){
+
+    View.OnLongClickListener listener = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+            vibe.vibrate(50);
+            sharedEdit = sharedPref.edit();
+            sharedEdit.putBoolean("SENDER", true);
+            sharedEdit.putString("STATE", States.STATES.ALARM.name());
+            sharedEdit.apply();
+
+            mservice.publishMessage(0);
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+
+            finish();
+            return true;
+        }
+    };
+
+/*    public void Cycle (View view){
 
         sharedEdit = sharedPref.edit();
         sharedEdit.putBoolean("SENDER", true);
@@ -130,5 +159,5 @@ public class IdleActivity extends AppCompatActivity {
         startActivity(intent);
 
         finish();
-    }
+    }*/
 }

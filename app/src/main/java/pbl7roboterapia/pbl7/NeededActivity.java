@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.IBinder;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +21,7 @@ public class NeededActivity extends AppCompatActivity {
     /** Global variables used along the Activity */
     boolean serviceBounded;
     AppService mservice;
+    Vibrator vibe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +31,17 @@ public class NeededActivity extends AppCompatActivity {
         /** Opening SharedPreferences for future use */
         sharedPref = getSharedPreferences("database",PREFERENCE_MODE_PRIVATE);
 
+        /** Creating vibrator <GIGGLE> */
+        vibe = (Vibrator) getSystemService(VIBRATOR_SERVICE) ;
+
         /** Updating the textView to contain the USERNAME string variable */
         TextView textView = (TextView) findViewById(R.id.neededText);
         String sigOth = sharedPref.getString("SIGNIFICANTOTHER", "ERROR");
         String text = getResources().getString(R.string.prompt_warning)+sigOth+getResources().getString(R.string.prompt_help);
         textView.setText(text);
         textView.setTextSize(getResources().getDimension(R.dimen.text_size));
+
+        findViewById(R.id.neededButton).setOnLongClickListener(listener);
     }
 
     /** Binding with AppService */
@@ -69,7 +76,25 @@ public class NeededActivity extends AppCompatActivity {
         }
     };
 
-    /** Cycling to the <NEXT STATE> & sending a message to MQTT broker*/
+    View.OnLongClickListener listener = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+            vibe.vibrate(50);
+            sharedEdit = sharedPref.edit();
+            sharedEdit.putString("STATE", States.STATES.VOLUNTEER.name());
+            sharedEdit.putBoolean("VOLUNTEER", true);
+            sharedEdit.apply();
+
+            mservice.publishMessage(2);
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+
+            finish();
+            return false;
+        }
+    };
+
+/*    *//** Cycling to the <NEXT STATE> & sending a message to MQTT broker*//*
     public void Cycle (View view){
 
         sharedEdit = sharedPref.edit();
@@ -82,5 +107,5 @@ public class NeededActivity extends AppCompatActivity {
         startActivity(intent);
 
         finish();
-    }
+    }*/
 }

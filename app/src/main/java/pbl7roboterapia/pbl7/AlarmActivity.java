@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.IBinder;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +20,7 @@ public class AlarmActivity extends AppCompatActivity {
 
     boolean serviceBounded;
     AppService mservice;
+    Vibrator vibe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,9 @@ public class AlarmActivity extends AppCompatActivity {
 
         /** Opening SharedPreferences for future use */
         sharedPref = getSharedPreferences("database",PREFERENCE_MODE_PRIVATE);
+
+        /** Creating vibrator <GIGGLE> */
+        vibe = (Vibrator) getSystemService(VIBRATOR_SERVICE) ;
 
         /** Updating the textView to contain the USERNAME string variable */
         TextView mainTextView = (TextView) findViewById(R.id.mainAlarmText);
@@ -55,6 +60,8 @@ public class AlarmActivity extends AppCompatActivity {
         }
         volunteerTwoText.setText(textTwo);
         volunteerTwoText.setTextSize(getResources().getDimension(R.dimen.text_size));
+
+        findViewById(R.id.alarmButton).setOnLongClickListener(listener);
 
     }
 
@@ -88,9 +95,28 @@ public class AlarmActivity extends AppCompatActivity {
             unbindService(mConnection);
             serviceBounded = false;
         }
+    }
+
+    View.OnLongClickListener listener = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+            vibe.vibrate(50);
+            sharedEdit = sharedPref.edit();
+            sharedEdit.putBoolean("SENDER", false);
+            sharedEdit.putString("STATE", States.STATES.IDLE.name());
+            sharedEdit.putString("VOLUNTEER1", "NULL");
+            sharedEdit.putString("VOLUNTEER2", "NULL");
+            sharedEdit.apply();
+
+            mservice.publishMessage(1);
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
+            return false;
+        }
     };
 
-    /** Cycling to the next state, i.e. alarm */
+/*    *//** Cycling to the next state, i.e. alarm *//*
     public void Cycle (View view){
         sharedEdit = sharedPref.edit();
         sharedEdit.putBoolean("SENDER", false);
@@ -103,5 +129,5 @@ public class AlarmActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
-    }
+    }*/
 }
