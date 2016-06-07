@@ -1,5 +1,6 @@
 package pbl7roboterapia.pbl7;
 
+import android.app.NotificationManager;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -24,9 +25,6 @@ public class IdleActivity extends AppCompatActivity {
     boolean serviceBounded;
     AppService mservice;
 
-
-    //comment
-    int it = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +73,8 @@ public class IdleActivity extends AppCompatActivity {
             break;
             case R.id.shutdown:
                 if (serviceCheck.isMyServiceRunning(AppService.class)) {
+                    NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                    nm.cancel(7002);
                     unbindService(mConnection);
                     serviceBounded = false;
                     stopService(service);
