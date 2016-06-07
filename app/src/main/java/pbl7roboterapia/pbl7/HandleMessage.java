@@ -70,7 +70,7 @@ public class HandleMessage {
                 }
                 break;
             case "1":
-                if (!details[1].equals(sharedPref.getString("USERNAME", "ERROR"))) {
+                if (!details[1].equals(sharedPref.getString("USERNAME", "ERROR")) || !sharedPref.getString("STATE", "ERROR").equals("IDLE")) {
                     sharedEdit.putString("STATE", States.STATES.IDLE.name());
                     sharedEdit.apply();
 
@@ -116,6 +116,34 @@ public class HandleMessage {
                     pushNotification.setContentText(context.getResources().getString(R.string.notification_body_volunteer));
                     pushNotification.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
                     pushNotification.setVibrate(pattern);
+                    pushNotification.setAutoCancel(true);
+
+                    Intent intentNoti = new Intent(context, MainActivity.class);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intentNoti, PendingIntent.FLAG_UPDATE_CURRENT);
+                    pushNotification.setContentIntent(pendingIntent);
+
+                    NotificationManager nm = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+                    nm.notify(pushNotiID, pushNotification.build());
+
+                    Intent dialogIntent = new Intent(context, MainActivity.class);
+                    dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(dialogIntent);
+                }
+                break;
+            case "3":
+                if ((!sharedPref.getBoolean("SENDER", true) && !sharedPref.getBoolean("VOLUNTEER", true)) && !sharedPref.getString("STATE", "ERROR").equals("IDLE")){
+                    sharedEdit.putString("STATE", States.STATES.IDLE.name());
+                    sharedEdit.apply();
+
+                    long[] pattern = {0, 400, 150, 400, 150, 400, 500, 400, 150, 100, 150, 400}; //OK
+                    pushNotification = new NotificationCompat.Builder(context);
+                    pushNotification.setSmallIcon(R.mipmap.ic_launcher);
+                    pushNotification.setWhen(System.currentTimeMillis());
+                    pushNotification.setContentTitle(context.getResources().getString(R.string.notification_body_idle));
+                    pushNotification.setContentText(context.getResources().getString(R.string.notification_body_idle));
+                    pushNotification.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+                    pushNotification.setVibrate(pattern);
+                    pushNotification.setOngoing(true);
                     pushNotification.setAutoCancel(true);
 
                     Intent intentNoti = new Intent(context, MainActivity.class);

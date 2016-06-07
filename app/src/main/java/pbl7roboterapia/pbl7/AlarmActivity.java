@@ -105,6 +105,9 @@ public class AlarmActivity extends AppCompatActivity {
             sharedEdit.putBoolean("SENDER", false);
             sharedEdit.putString("STATE", States.STATES.IDLE.name());
             sharedEdit.putString("VOLUNTEER1", "NULL");
+            if (!sharedPref.getString("VOLUNTEER2", "NULL").equals("NULL")){
+                mservice.publishMessage(3);
+            }
             sharedEdit.putString("VOLUNTEER2", "NULL");
             sharedEdit.apply();
 

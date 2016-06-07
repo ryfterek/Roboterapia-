@@ -37,6 +37,9 @@ public class IdleActivity extends AppCompatActivity {
 
         /** Opening SharedPreferences for future use */
         sharedPref = getSharedPreferences("database",PREFERENCE_MODE_PRIVATE);
+        sharedEdit = sharedPref.edit();
+        sharedEdit.putBoolean("SENDER", false);
+        sharedEdit.putBoolean("VOLUNTEER", false);
 
         /** Creating vibrator <GIGGLE> */
         vibe = (Vibrator) getSystemService(VIBRATOR_SERVICE) ;
