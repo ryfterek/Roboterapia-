@@ -96,6 +96,9 @@ public class HandleMessage {
                     context.startActivity(dialogIntent);
                 }
                 break;
+            case "2":
+                //TODO inform the sender that help is actually going
+                break;
         }
     }
 }

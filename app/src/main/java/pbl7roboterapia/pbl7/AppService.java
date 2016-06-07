@@ -87,6 +87,7 @@ public class AppService extends Service {
         sharedEdit = sharedPref.edit();
         sharedEdit.putString("STATE", States.STATES.IDLE.name());
         sharedEdit.putBoolean("SENDER", false);
+        sharedEdit.putString("SIGNIFICANTOTHER", "ERROR");
         sharedEdit.apply();
         Toast.makeText(getApplicationContext(), "App reset and ready", Toast.LENGTH_LONG).show();
 

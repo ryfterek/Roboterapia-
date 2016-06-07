@@ -55,6 +55,11 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(neededIntent);
                     finish();
                     break;
+                case VOLUNTEER:
+                    Intent volunteerIntent = new Intent(this, VolunteerActivity.class);
+                    startActivity(volunteerIntent);
+                    finish();
+                    break;
             }
         }
     }

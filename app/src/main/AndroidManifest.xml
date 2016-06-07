@@ -46,6 +46,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/Needed" />
         <activity
+            android:name=".VolunteerActivity"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Volunteer" />
+        <activity
             android:name=".MainActivity"
             android:noHistory="true"
             android:screenOrientation="portrait"
@@ -64,6 +69,7 @@
 
         <!-- Mqtt Service -->
         <service android:name="org.eclipse.paho.android.service.MqttService" />
+
     </application>
 
 </manifest>

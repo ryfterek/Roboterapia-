@@ -30,6 +30,13 @@
         <item name="android:alertDialogTheme">@style/Dialogs</item>
     </style>
 
+    <style name="Volunteer" parent="AppTheme">
+        <item name="colorPrimary">@color/volunteerPrimary</item>
+        <item name="colorPrimaryDark">@color/volunteerPrimaryDark</item>
+        <item name="colorAccent">@color/volunteerAccent</item>
+        <item name="android:alertDialogTheme">@style/Dialogs</item>
+    </style>
+
     <style name="Dialogs" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">@color/dialogButtons</item>
         <item name="android:textColorPrimary">@color/dialogText</item>

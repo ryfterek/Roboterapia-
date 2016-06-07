@@ -17,6 +17,9 @@
     <string name="prompt_warning">Attention!\u0020</string>
     <string name="prompt_help">\u0020needs your help.</string>
 
+    <!-- Strings for VolunteerActivity -->
+    <string name="prompt_thank">Thank you for volunteering to help\u0020</string>
+
     <!-- Strings for Menus & Settings -->
     <string name="menu_settings_text">Change Login</string>
     <string name="menu_reconnect_text">Reconnect</string>

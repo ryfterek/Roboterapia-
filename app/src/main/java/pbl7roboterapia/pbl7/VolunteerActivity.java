@@ -7,12 +7,10 @@ import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
-public class NeededActivity extends AppCompatActivity {
+public class VolunteerActivity extends AppCompatActivity {
 
-    /**SharedPreference is the most compact way to save variables on device's memory */
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor sharedEdit;
     private static final int PREFERENCE_MODE_PRIVATE = 0;
@@ -24,15 +22,15 @@ public class NeededActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_needed);
+        setContentView(R.layout.activity_volunteer);
 
         /** Opening SharedPreferences for future use */
         sharedPref = getSharedPreferences("database",PREFERENCE_MODE_PRIVATE);
 
         /** Updating the textView to contain the USERNAME string variable */
-        TextView textView = (TextView) findViewById(R.id.neededText);
+        TextView textView = (TextView) findViewById(R.id.volunteerText);
         String sigOth = sharedPref.getString("SIGNIFICANTOTHER", "ERROR");
-        String text = getResources().getString(R.string.prompt_warning)+sigOth+getResources().getString(R.string.prompt_help);
+        String text = getResources().getString(R.string.prompt_thank)+sigOth;
         textView.setText(text);
         textView.setTextSize(getResources().getDimension(R.dimen.text_size));
     }
@@ -68,18 +66,4 @@ public class NeededActivity extends AppCompatActivity {
             serviceBounded = false;
         }
     };
-
-    /** Cycling to the <NEXT STATE> & sending a message to MQTT broker*/
-    public void Cycle (View view){
-
-        sharedEdit = sharedPref.edit();
-        sharedEdit.putString("STATE", States.STATES.VOLUNTEER.name());
-        sharedEdit.apply();
-
-        mservice.publishMessage(2);
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-
-        finish();
-    }
 }
