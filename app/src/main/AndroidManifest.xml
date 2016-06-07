@@ -23,22 +23,27 @@
         <activity
             android:name=".LoginActivity"
             android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"
             android:noHistory="true"/>
         <activity
             android:name=".IdleActivity"
             android:theme="@style/Idle"
+            android:screenOrientation="portrait"
             android:noHistory="true"/>
         <activity
             android:name=".AlarmActivity"
             android:theme="@style/Alarm"
+            android:screenOrientation="portrait"
             android:noHistory="true"/>
         <activity
             android:name=".DialogActivity"
             android:theme="@android:style/Theme.Dialog"
+            android:screenOrientation="portrait"
             android:noHistory="true"/>
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
