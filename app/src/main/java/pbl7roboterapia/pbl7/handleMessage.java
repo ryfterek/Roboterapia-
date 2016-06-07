@@ -62,6 +62,10 @@ public class HandleMessage {
                     NotificationManager nm = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
                     nm.notify(pushNotiID, pushNotification.build());
 
+                    Intent dialogIntent = new Intent(context, MainActivity.class);
+                    dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(dialogIntent);
+
                 }
                 break;
             case "1":
@@ -86,6 +90,10 @@ public class HandleMessage {
 
                     NotificationManager nm = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
                     nm.notify(pushNotiID, pushNotification.build());
+
+                    Intent dialogIntent = new Intent(context, MainActivity.class);
+                    dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(dialogIntent);
                 }
                 break;
         }

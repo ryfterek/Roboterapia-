@@ -128,6 +128,7 @@ public class IdleActivity extends AppCompatActivity {
         mservice.publishMessage(0);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+
         finish();
     }
 }

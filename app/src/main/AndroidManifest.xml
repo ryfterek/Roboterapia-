@@ -22,19 +22,24 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            android:noHistory="true"/>
         <activity
             android:name=".IdleActivity"
-            android:theme="@style/Idle" />
+            android:theme="@style/Idle"
+            android:noHistory="true"/>
         <activity
             android:name=".AlarmActivity"
-            android:theme="@style/Alarm" />
+            android:theme="@style/Alarm"
+            android:noHistory="true"/>
         <activity
             android:name=".DialogActivity"
-            android:theme="@android:style/Theme.Dialog"/>
+            android:theme="@android:style/Theme.Dialog"
+            android:noHistory="true"/>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
