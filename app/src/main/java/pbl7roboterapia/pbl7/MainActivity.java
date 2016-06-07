@@ -50,6 +50,11 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(alarmIntent);
                     finish();
                     break;
+                case NEEDED:
+                    Intent neededIntent = new Intent(this, NeededActivity.class);
+                    startActivity(neededIntent);
+                    finish();
+                    break;
             }
         }
     }

@@ -5,7 +5,7 @@ public class States {
 
     public enum STATES {
         IDLE,
-        NEEDHELP,
+        NEEDED,
         ALARM,
         VOLUNTEER,
     }

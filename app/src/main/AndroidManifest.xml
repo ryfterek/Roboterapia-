@@ -22,29 +22,34 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/AppTheme"
+            android:noHistory="true"
             android:screenOrientation="portrait"
-            android:noHistory="true"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".IdleActivity"
-            android:theme="@style/Idle"
+            android:noHistory="true"
             android:screenOrientation="portrait"
-            android:noHistory="true"/>
+            android:theme="@style/Idle" />
         <activity
             android:name=".AlarmActivity"
-            android:theme="@style/Alarm"
+            android:noHistory="true"
             android:screenOrientation="portrait"
-            android:noHistory="true"/>
+            android:theme="@style/Alarm" />
         <activity
             android:name=".DialogActivity"
-            android:theme="@android:style/Theme.Dialog"
+            android:noHistory="true"
             android:screenOrientation="portrait"
-            android:noHistory="true"/>
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".NeededActivity"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Needed" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme"
+            android:noHistory="true"
             android:screenOrientation="portrait"
-            android:noHistory="true">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -55,11 +60,10 @@
         <service
             android:name=".AppService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <!-- Mqtt Service -->
         <service android:name="org.eclipse.paho.android.service.MqttService" />
-
     </application>
 
 </manifest>

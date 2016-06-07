@@ -12,9 +12,9 @@
     <color name="alarmPrimaryDark">#FFA000</color>
     <color name="alarmAccent">#2196F3</color>
 
-    <color name="needHelpPrimary">#FF0000</color>
-    <color name="needHelpPrimaryDark">#B40404</color>
-    <color name="needHelpAccent">#04B404</color>
+    <color name="neededPrimary">#FF0000</color>
+    <color name="neededPrimaryDark">#B40404</color>
+    <color name="neededAccent">#04B404</color>
     
     <color name="dialogBackground">#ffffff</color>
     <color name="dialogText">#37474f</color>

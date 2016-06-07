@@ -41,7 +41,7 @@ public class HandleMessage {
             case "0":
                 if (!sharedPref.getBoolean("SENDER", true)) {
                     sharedEdit.putString("SIGNIFICANTOTHER", details[1]);
-                    sharedEdit.putString("STATE",States.STATES.ALARM.name());
+                    sharedEdit.putString("STATE",States.STATES.NEEDED.name());
                     sharedEdit.apply();
 
                     long[] pattern = {0, 500, 500, 500};

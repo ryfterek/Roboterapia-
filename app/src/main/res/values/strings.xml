@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PBL#7:Roboterapia - Panic Button</string>
+    <string name="app_name">PBL#7:Roboterapia</string>
 
     <!-- Strings for LoginActivity -->
     <string name="prompt_username">Username</string>
@@ -12,6 +12,10 @@
     <!-- Strings for AlarmActivity -->
     <string name="prompt_calm">Keep calm\u0020</string>
     <string name="prompt_incoming">Help is already on its way.</string>
+
+    <!-- Strings for NeededActivity -->
+    <string name="prompt_warning">Attention!\u0020</string>
+    <string name="prompt_help">\u0020needs your help.</string>
 
     <!-- Strings for Menus & Settings -->
     <string name="menu_settings_text">Change Login</string>
