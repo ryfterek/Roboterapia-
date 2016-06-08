@@ -6,6 +6,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Binder;
@@ -39,8 +40,8 @@ public class AppService extends Service {
     private MQTTConnectionStatus connectionStatus = MQTTConnectionStatus.INITIAL;
 
     /** Hardcoding the MQTT broker's details here */
-    private final String    HOST = "iot.eclipse.org";
-    private final int       PORT = 1883;
+    private final String    HOST = "m21.cloudmqtt.com";
+    private final int       PORT = 19387;
     private final String    ADDR = "tcp://" + HOST + ":" + PORT;
     private final String    TOPIC = "foo/Santiago/Simon";
     private final int       QOS = 0;
@@ -132,6 +133,9 @@ public class AppService extends Service {
 
         /** Connecting MQTT client to the broker */
         MqttConnectOptions options = new MqttConnectOptions();
+        options.setUserName("abilyvga");
+        options.setPassword("IVuAJDcDU8WB".toCharArray());
+        options.setKeepAliveInterval(30);
         try {
             client.connect(options);
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.connect_toast), Toast.LENGTH_SHORT).show();
@@ -240,7 +244,20 @@ public class AppService extends Service {
     {
         public void connectionLost(Throwable cause) {
             // TODO: Handle loss of connection
-            Toast.makeText(getApplicationContext(), "This is Toast", Toast.LENGTH_SHORT).show();
+
+            NotificationCompat.Builder pushNotification;
+            int pushNotiID = 7003;
+
+            pushNotification = new NotificationCompat.Builder(getApplicationContext());
+            pushNotification.setSmallIcon(R.mipmap.ic_launcher);
+            pushNotification.setWhen(System.currentTimeMillis());
+            pushNotification.setContentTitle("TEST");
+            pushNotification.setContentText("LOST CONNECTION");
+            pushNotification.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+            pushNotification.setAutoCancel(true);
+
+            NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            nm.notify(pushNotiID, pushNotification.build());
         }
 
         /** Here is handled the arrival of a message from broker */
