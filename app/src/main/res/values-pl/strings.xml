@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PBL#7:Roboterapia - Panic Button</string>
+    <string name="app_name">PBL#7:Roboterapia</string>
 
     <!-- Strings for LoginActivity -->
     <string name="prompt_username">Pseudonim</string>
@@ -12,9 +12,41 @@
 
     <!-- Strings for AlarmActivity -->
     <string name="prompt_calm">Tylko spokojnie\u0020</string>
-    <string name="prompt_incoming">Pomoc jest już w drodze.</string>
+    <string name="prompt_incoming">Powiadomiliśmy wszystkich o problemie.</string>
 
     <!-- Strings for Menus & Settings -->
     <string name="menu_settings_text">Zmień pseudonim</string>
+    <string name="connect_toast">Połączono z serwerem</string>
+    <string name="disconnect_toast">Rozłączono z serwerem</string>
+    <string name="error_client_toast">Wystąpił błąd przy uruchomieniu</string>
+    <string name="error_connect_toast">Nie udało się połączyć z serwerem</string>
+    <string name="error_noWiFi_toast">Brak połączenia z WiFi - proszę połączyć się z WiFi Roboterapii</string>
+    <string name="error_subscribe_toast">Nie udało się subskrybować wiadomości</string>
+    <string name="fail_body">Wygląda na to, że jakieś chochliki nabroiły przy starcie aplikacji. Spróbujemy ponownie, dobrze?</string>
+    <string name="fail_negative">Zamknij aplikację</string>
+    <string name="fail_positive">Spróbuj ponownie</string>
+    <string name="fail_title">Roboterapia: O kurczę!</string>
+    <string name="menu_reconnect_text">Połącz ponownie</string>
+    <string name="menu_shutdown_text">Wyłącz aplikację</string>
+    <string name="message_toast">Nowa wiadomość!</string>
+    <string name="no_connection_body">Wygląda na to, że Twój telefon nie jest podłączony do naszego serwera. Połącz się z WiFi Roboterapii i spróbuj ponownie.</string>
+    <string name="no_connection_negative">Zamknij aplikację</string>
+    <string name="no_connection_positive">Włącz WiFi</string>
+    <string name="no_connection_title">Roboterapia: O kurczę!</string>
+    <string name="notification_body_alarm">Zgłoś się jako ochotnik.</string>
+    <string name="notification_body_idle">Życzymy miłego, spokojnego dnia. </string>
+    <string name="notification_body_volunteer">Zachowaj spokój.</string>
+    <string name="notification_title_alarm">\u0020potrzebuje Twojej pomocy!</string>
+    <string name="notification_title_idle">Kłopot zażegnany!</string>
+    <string name="notification_title_volunteer">\u0020śpieszy Ci z pomocą!</string>
+    <string name="ongoing_text">Służymy pomocą.</string>
+    <string name="prompt_help">\potrzebuje Twojej pomocy.</string>
+    <string name="prompt_thank">Dziękujemy, że pomagasz\u0020</string>
+    <string name="prompt_volunteer">\u0020śpieszy Ci z pomocą.</string>
+    <string name="prompt_waiting">Poczekaj na ochotnika.</string>
+    <string name="prompt_warning">Uwaga!\u0020</string>
+    <string name="subscribe_toast">Subskrybowano wiadomości</string>
+    <string name="toast_hold">Przytrzymaj przycisk, by go użyć.</string>
+    <string name="unsubscribe_toast">Anulowano subskrypcję</string>
 
 </resources>
