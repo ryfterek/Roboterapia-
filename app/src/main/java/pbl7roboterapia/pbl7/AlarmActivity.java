@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.IBinder;
+import android.os.SystemClock;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class AlarmActivity extends AppCompatActivity {
 
@@ -71,7 +73,7 @@ public class AlarmActivity extends AppCompatActivity {
         super.onStart();
         Intent mIntent = new Intent(this, AppService.class);
         bindService(mIntent, mConnection, BIND_AUTO_CREATE);
-    };
+    }
 
     /** Binding with AppService */
     ServiceConnection mConnection = new ServiceConnection() {
@@ -105,9 +107,6 @@ public class AlarmActivity extends AppCompatActivity {
             sharedEdit.putBoolean("SENDER", false);
             sharedEdit.putString("STATE", States.STATES.IDLE.name());
             sharedEdit.putString("VOLUNTEER1", "NULL");
-            if (!sharedPref.getString("VOLUNTEER2", "NULL").equals("NULL")){
-                mservice.publishMessage(3);
-            }
             sharedEdit.putString("VOLUNTEER2", "NULL");
             sharedEdit.apply();
 

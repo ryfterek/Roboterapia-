@@ -131,7 +131,7 @@ public class HandleMessage {
                 }
                 break;
             case "3":
-                if ((!sharedPref.getBoolean("SENDER", true) && !sharedPref.getBoolean("VOLUNTEER", true)) && !sharedPref.getString("STATE", "ERROR").equals("IDLE")){
+                if (!sharedPref.getString("STATE", "ERROR").equals("NEEDED")){
                     sharedEdit.putString("STATE", States.STATES.IDLE.name());
                     sharedEdit.apply();
 
