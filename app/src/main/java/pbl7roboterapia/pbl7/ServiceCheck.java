@@ -3,10 +3,6 @@ package pbl7roboterapia.pbl7;
 import android.app.ActivityManager;
 import android.content.Context;
 
-/**
- * Created by Szymon on 2016-06-05.
- */
-
 /** Provides a method checking if the service is running already in the background, found at
  *  http://stackoverflow.com/questions/600207/how-to-check-if-a-service-is-running-on-android
  * */

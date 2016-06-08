@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
-/** Default Activity being opened on icon tap. Check if a user has already provided login and if AppService is running*/
+/** Default Activity being opened on all the cases. Check if a user has already provided login and if AppService is running, redirecting to further activities as needed*/
 
 public class MainActivity extends AppCompatActivity {
 

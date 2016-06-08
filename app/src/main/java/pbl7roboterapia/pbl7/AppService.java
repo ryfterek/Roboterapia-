@@ -105,23 +105,23 @@ public class AppService extends Service {
             if (activeNetwork == null) {
 
                 // NO CONNECTION
+                /** Prompting dialog box */
                 Intent intent = new Intent(this, DialogActivity.class);
                 intent.putExtra(EXTRA_DIALOG_REASON, 1);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
 
             } else if (activeNetwork.getType() != ConnectivityManager.TYPE_WIFI) {
+
                 // CONNECTED NOT BY WIFI
+                /** Prompting dialog box */
 /*                Intent intent = new Intent(this, DialogActivity.class);
                 intent.putExtra(EXTRA_DIALOG_REASON, 1);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);*/
             }
         }
-        catch (Exception e)
-        {
-
-        }
+        catch (Exception e){}
 
         /** Initializing a MQTT client */
         try {
@@ -137,7 +137,7 @@ public class AppService extends Service {
         options = new MqttConnectOptions();
         options.setUserName("abilyvga");
         options.setPassword("IVuAJDcDU8WB".toCharArray());
-        options.setKeepAliveInterval(600);
+        options.setKeepAliveInterval(3600);
         try {
             client.connect(options);
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.connect_toast), Toast.LENGTH_SHORT).show();
@@ -243,13 +243,16 @@ public class AppService extends Service {
         }
     }
 
+    /** Listening to MQTT traffic */
     public class ServerCallback implements MqttCallback
     {
+        /** Handling the loss of connection */
         public void connectionLost(Throwable cause) {
             // TODO: Handle loss of connection
 
-            NotificationCompat.Builder pushNotification, not, not2;
-            int pushNotiID = 7003, notID = 707, not1ID = 00000123;
+            /** Notifying the user */
+            NotificationCompat.Builder pushNotification;
+            int pushNotiID = 7003;
 
             pushNotification = new NotificationCompat.Builder(getApplicationContext());
             pushNotification.setSmallIcon(R.mipmap.ic_launcher);
@@ -262,37 +265,11 @@ public class AppService extends Service {
             NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             nm.notify(pushNotiID, pushNotification.build());
 
-            sharedPref = getSharedPreferences("database",PREFERENCE_MODE_PRIVATE);
-
-            try {
-                client.connect(options);
-                client.subscribe(TOPIC, QOS);
-                Toast.makeText(getApplicationContext(), getResources().getString(R.string.subscribe_toast), Toast.LENGTH_SHORT).show();
-                connectionStatus = MQTTConnectionStatus.SUBSCRIBED;
-
-                not = new NotificationCompat.Builder(getApplicationContext());
-                not.setSmallIcon(R.mipmap.ic_launcher);
-                not.setWhen(System.currentTimeMillis());
-                not.setContentTitle("TEST");
-                not.setContentText("Could reconnect");
-                not.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-                not.setAutoCancel(true);
-
-                NotificationManager nm1 = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                nm1.notify(not1ID, not.build());
-            }
-            catch (MqttException e) {
-                not2 = new NotificationCompat.Builder(getApplicationContext());
-                not2.setSmallIcon(R.mipmap.ic_launcher);
-                not2.setWhen(System.currentTimeMillis());
-                not2.setContentTitle("TEST");
-                not2.setContentText("Couldnt reconnect");
-                not2.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-                not2.setAutoCancel(true);
-
-                NotificationManager nm2 = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                nm2.notify(notID, not2.build());
-            }
+            /** Prompting dialog box */
+            Intent intent = new Intent(getApplicationContext(), DialogActivity.class);
+            intent.putExtra(EXTRA_DIALOG_REASON, 2);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         }
 
         /** Here is handled the arrival of a message from broker */
@@ -302,9 +279,7 @@ public class AppService extends Service {
             HandleMessage handleMessage = new HandleMessage(getApplicationContext());
             handleMessage.handle(message.toString());
         }
-        public void deliveryComplete(IMqttDeliveryToken token)
-        {
-        }
+        public void deliveryComplete(IMqttDeliveryToken token) {}
     }
 
     @Override

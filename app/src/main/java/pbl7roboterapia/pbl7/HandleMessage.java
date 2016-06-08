@@ -7,11 +7,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.support.v4.app.NotificationCompat;
-import android.widget.Toast;
 
-/**
- * Created by Szymon on 2016-06-06.
- */
+/** Method created to decode obtained messages, prompt notifications, and pass it accordingly to MainActivity */
+
 public class HandleMessage {
 
     /**SharedPreference is the most compact way to save variables on device's memory */
@@ -39,6 +37,7 @@ public class HandleMessage {
         String[] details = message.split(":");
 
         switch (details[0]) {
+            /** Someone needs help */
             case "0":
                 if (!sharedPref.getBoolean("SENDER", true)) {
                     sharedEdit.putString("SIGNIFICANTOTHER", details[1]);
@@ -69,6 +68,7 @@ public class HandleMessage {
 
                 }
                 break;
+            /** Alarm is over */
             case "1":
                 if (!details[1].equals(sharedPref.getString("USERNAME", "ERROR")) || !sharedPref.getString("STATE", "ERROR").equals("IDLE")) {
                     sharedEdit.putString("STATE", States.STATES.IDLE.name());
@@ -97,6 +97,7 @@ public class HandleMessage {
                     context.startActivity(dialogIntent);
                 }
                 break;
+            /** Someone volunteered to help */
             case "2":
                 if (sharedPref.getBoolean("SENDER", true)) {
 

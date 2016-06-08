@@ -57,7 +57,7 @@ public class VolunteerActivity extends AppCompatActivity {
         }
     };
 
-    /** Unbidning from AppService */
+    /** Unbinding from AppService */
     @Override
     protected void onStop() {
         super.onStop();

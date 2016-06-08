@@ -42,6 +42,7 @@ public class NeededActivity extends AppCompatActivity {
         textView.setText(text);
         textView.setTextSize(getResources().getDimension(R.dimen.text_size));
 
+        /** Setting up button press handling */
         findViewById(R.id.neededButton).setOnClickListener(clickListener);
         findViewById(R.id.neededButton).setOnLongClickListener(longClickListener);
     }
@@ -68,7 +69,7 @@ public class NeededActivity extends AppCompatActivity {
         }
     };
 
-    /** Unbidning from AppService */
+    /** Unbinding from AppService */
     @Override
     protected void onStop() {
         super.onStop();
@@ -76,8 +77,9 @@ public class NeededActivity extends AppCompatActivity {
             unbindService(mConnection);
             serviceBounded = false;
         }
-    };
+    }
 
+    /** Handling button tap */
     View.OnClickListener clickListener = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
@@ -85,6 +87,7 @@ public class NeededActivity extends AppCompatActivity {
         }
     };
 
+    /** Handling button press */
     View.OnLongClickListener longClickListener = new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(View v) {
@@ -102,19 +105,4 @@ public class NeededActivity extends AppCompatActivity {
             return false;
         }
     };
-
-/*    *//** Cycling to the <NEXT STATE> & sending a message to MQTT broker*//*
-    public void Cycle (View view){
-
-        sharedEdit = sharedPref.edit();
-        sharedEdit.putString("STATE", States.STATES.VOLUNTEER.name());
-        sharedEdit.putBoolean("VOLUNTEER", true);
-        sharedEdit.apply();
-
-        mservice.publishMessage(2);
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-
-        finish();
-    }*/
 }

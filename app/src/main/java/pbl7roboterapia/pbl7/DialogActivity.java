@@ -62,8 +62,29 @@ public class DialogActivity extends Activity {
             });
             AlertDialog dialog = dialogBuilder.create();
             dialog.show();
-        } else if (false){
-
+        } else if (getIntent().getIntExtra(AppService.EXTRA_DIALOG_REASON, 0) == 3){
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this, R.style.Dialogs);
+            dialogBuilder.setCancelable(false);
+            dialogBuilder.setTitle(getResources().getString(R.string.disconnect_title));
+            dialogBuilder.setMessage(getResources().getString(R.string.disconnect_body));
+            dialogBuilder.setPositiveButton(getResources().getString(R.string.disconnect_positive), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    Intent service = new Intent(getApplicationContext(), AppService.class);
+                    stopService(service);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+            dialogBuilder.setNegativeButton(getResources().getString(R.string.disconnect_negative), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    Intent service = new Intent(getApplicationContext(), AppService.class);
+                    stopService(service);
+                    finishAffinity();
+                }
+            });
+            AlertDialog dialog = dialogBuilder.create();
+            dialog.show();
         }
     }
 }

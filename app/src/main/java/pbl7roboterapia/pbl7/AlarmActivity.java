@@ -14,11 +14,12 @@ import android.widget.Toast;
 
 public class AlarmActivity extends AppCompatActivity {
 
-    /**SharedPreference is the most compact way to save variables on device's memory */
+    /** SharedPreference is the most compact way to save variables on device's memory */
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor sharedEdit;
     private static final int PREFERENCE_MODE_PRIVATE = 0;
 
+    /** Global variables */
     boolean serviceBounded;
     AppService mservice;
     Vibrator vibe;
@@ -62,6 +63,7 @@ public class AlarmActivity extends AppCompatActivity {
         volunteerTwoText.setText(textTwo);
         volunteerTwoText.setTextSize(getResources().getDimension(R.dimen.text_size));
 
+        /** Setting up button press handling */
         findViewById(R.id.alarmButton).setOnLongClickListener(longClickListener);
         findViewById(R.id.alarmButton).setOnClickListener(clickListener);
 
@@ -89,7 +91,7 @@ public class AlarmActivity extends AppCompatActivity {
         }
     };
 
-    /** Unbidning from AppService */
+    /** Unbinding from AppService */
     @Override
     protected void onStop() {
         super.onStop();
@@ -99,6 +101,7 @@ public class AlarmActivity extends AppCompatActivity {
         }
     }
 
+    /** Handling button tap */
     View.OnClickListener clickListener = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
@@ -106,6 +109,7 @@ public class AlarmActivity extends AppCompatActivity {
         }
     };
 
+    /** Handling button press */
     View.OnLongClickListener longClickListener = new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(View v) {
@@ -124,19 +128,4 @@ public class AlarmActivity extends AppCompatActivity {
             return false;
         }
     };
-
-/*    *//** Cycling to the next state, i.e. alarm *//*
-    public void Cycle (View view){
-        sharedEdit = sharedPref.edit();
-        sharedEdit.putBoolean("SENDER", false);
-        sharedEdit.putString("STATE", States.STATES.IDLE.name());
-        sharedEdit.putString("VOLUNTEER1", "NULL");
-        sharedEdit.putString("VOLUNTEER2", "NULL");
-        sharedEdit.apply();
-
-        mservice.publishMessage(1);
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
-    }*/
 }

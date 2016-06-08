@@ -47,6 +47,11 @@
     <string name="fail_positive">Try again</string>
     <string name="fail_negative">Close App</string>
 
+    <string name="disconnect_title">Roboterapia: Oh snap!</string>
+    <string name="disconnect_body">Seems like we have lost connection. Lets try to reconnect, shall we?</string>
+    <string name="disconnect_positive">Reconnect</string>
+    <string name="disconnect_negative">Close App</string>
+
     <!-- All kind of toasts -->
     <string name="toast_hold">Long press the button to use it.</string>
 
