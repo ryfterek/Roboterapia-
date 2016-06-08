@@ -14,10 +14,10 @@
 
     <color name="neededPrimary">#FF0000</color>
     <color name="neededPrimaryDark">#B40404</color>
-    <color name="neededAccent">#00FF00</color>
+    <color name="neededAccent">#4CAF50</color>
 
-    <color name="volunteerPrimary">#00FF00</color>
-    <color name="volunteerPrimaryDark">#00B300</color>
+    <color name="volunteerPrimary">#4CAF50</color>
+    <color name="volunteerPrimaryDark">#388E3C</color>
     <color name="volunteerAccent">#FFC107</color>
     
     <color name="dialogBackground">#ffffff</color>
