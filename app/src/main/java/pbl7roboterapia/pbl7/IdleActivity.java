@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.IBinder;
+import android.os.SystemClock;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -80,6 +81,8 @@ public class IdleActivity extends AppCompatActivity {
             case R.id.reconnect:
                 if (serviceCheck.isMyServiceRunning(AppService.class)) {
                     unbindService(mConnection);
+                    sharedEdit.putBoolean("TURNOFF", true);
+                    sharedEdit.apply();
                     stopService(service);
                 }
                 nm.cancel(7002);
@@ -91,6 +94,8 @@ public class IdleActivity extends AppCompatActivity {
                     nm.cancel(7002);
                     unbindService(mConnection);
                     serviceBounded = false;
+                    sharedEdit.putBoolean("TURNOFF", true);
+                    sharedEdit.apply();
                     stopService(service);
                 }
                 finish();

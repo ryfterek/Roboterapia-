@@ -89,8 +89,6 @@ public class AppService extends Service {
         sharedEdit = sharedPref.edit();
         sharedEdit.putString("STATE", States.STATES.IDLE.name());
         sharedEdit.putBoolean("SENDER", false);
-        sharedEdit.putBoolean("VOLUNTEER", false);
-        sharedEdit.putBoolean("TURNOFF", false);
         sharedEdit.putString("SIGNIFICANTOTHER", "NULL");
         sharedEdit.putString("VOLUNTEER1", "NULL");
         sharedEdit.putString("VOLUNTEER2", "NULL");
@@ -174,6 +172,9 @@ public class AppService extends Service {
 
             NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             nm.notify(ongoingNotiID, ongoingNotification.build());
+
+            sharedEdit.putBoolean("VOLUNTEER", false);
+            sharedEdit.apply();
         }else{
             // TODO: Setup failure has to be handled somehow.
             Intent intent = new Intent(this, DialogActivity.class);
@@ -250,26 +251,29 @@ public class AppService extends Service {
         public void connectionLost(Throwable cause) {
             // TODO: Handle loss of connection
 
-            /** Notifying the user */
-            NotificationCompat.Builder pushNotification;
-            int pushNotiID = 7003;
+            if (!sharedPref.getBoolean("TURNOFF", false)) {
 
-            pushNotification = new NotificationCompat.Builder(getApplicationContext());
-            pushNotification.setSmallIcon(R.mipmap.ic_launcher);
-            pushNotification.setWhen(System.currentTimeMillis());
-            pushNotification.setContentTitle("TEST");
-            pushNotification.setContentText("LOST CONNECTION");
-            pushNotification.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-            pushNotification.setAutoCancel(true);
+                /** Notifying the user */
+                NotificationCompat.Builder pushNotification;
+                int pushNotiID = 7003;
 
-            NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            nm.notify(pushNotiID, pushNotification.build());
+                pushNotification = new NotificationCompat.Builder(getApplicationContext());
+                pushNotification.setSmallIcon(R.mipmap.ic_launcher);
+                pushNotification.setWhen(System.currentTimeMillis());
+                pushNotification.setContentTitle("TEST");
+                pushNotification.setContentText("LOST CONNECTION");
+                pushNotification.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+                pushNotification.setAutoCancel(true);
 
-            /** Prompting dialog box */
-            Intent intent = new Intent(getApplicationContext(), DialogActivity.class);
-            intent.putExtra(EXTRA_DIALOG_REASON, 2);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+                NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                nm.notify(pushNotiID, pushNotification.build());
+
+                /** Prompting dialog box if needed */
+                Intent intent = new Intent(getApplicationContext(), DialogActivity.class);
+                intent.putExtra(EXTRA_DIALOG_REASON, 3);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
         }
 
         /** Here is handled the arrival of a message from broker */
