@@ -62,9 +62,9 @@ public class HandleMessage {
                     NotificationManager nm = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
                     nm.notify(pushNotiID, pushNotification.build());
 
-                    Intent dialogIntent = new Intent(context, MainActivity.class);
-                    dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(dialogIntent);
+                    Intent intent = new Intent(context, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
 
                 }
                 break;
@@ -92,9 +92,9 @@ public class HandleMessage {
                     NotificationManager nm = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
                     nm.notify(pushNotiID, pushNotification.build());
 
-                    Intent dialogIntent = new Intent(context, MainActivity.class);
-                    dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(dialogIntent);
+                    Intent intent = new Intent(context, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
                 }
                 break;
             /** Someone volunteered to help */
@@ -126,9 +126,9 @@ public class HandleMessage {
                     NotificationManager nm = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
                     nm.notify(pushNotiID, pushNotification.build());
 
-                    Intent dialogIntent = new Intent(context, MainActivity.class);
-                    dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(dialogIntent);
+                    Intent intent = new Intent(context, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
                 }
                 break;
 /*            case "3":

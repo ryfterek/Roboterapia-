@@ -37,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
                 startService(service);
             }
 
+            finish();
+            startActivity(getIntent());
+
             /** Redirecting to the correct Activity based on the state of the device*/
             switch (States.STATES.valueOf(sharedPref.getString("STATE","IDLE"))){
                 case IDLE:
