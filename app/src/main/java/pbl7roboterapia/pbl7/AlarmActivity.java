@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.IBinder;
-import android.os.SystemClock;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -63,7 +62,8 @@ public class AlarmActivity extends AppCompatActivity {
         volunteerTwoText.setText(textTwo);
         volunteerTwoText.setTextSize(getResources().getDimension(R.dimen.text_size));
 
-        findViewById(R.id.alarmButton).setOnLongClickListener(listener);
+        findViewById(R.id.alarmButton).setOnLongClickListener(longClickListener);
+        findViewById(R.id.alarmButton).setOnClickListener(clickListener);
 
     }
 
@@ -99,7 +99,14 @@ public class AlarmActivity extends AppCompatActivity {
         }
     }
 
-    View.OnLongClickListener listener = new View.OnLongClickListener() {
+    View.OnClickListener clickListener = new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.toast_hold), Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    View.OnLongClickListener longClickListener = new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(View v) {
             vibe.vibrate(50);

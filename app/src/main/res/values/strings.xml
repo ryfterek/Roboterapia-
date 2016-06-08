@@ -48,6 +48,8 @@
     <string name="fail_negative">Close App</string>
 
     <!-- All kind of toasts -->
+    <string name="toast_hold">Long press the button to use it.</string>
+
     <string name="error_noWiFi_toast">No WiFi connection - please connect to Roboterapia Router</string>
     <string name="error_client_toast">Initialisation error</string>
     <string name="connect_toast">Connected to server</string>

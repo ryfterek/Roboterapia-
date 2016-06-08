@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class NeededActivity extends AppCompatActivity {
 
@@ -41,7 +42,8 @@ public class NeededActivity extends AppCompatActivity {
         textView.setText(text);
         textView.setTextSize(getResources().getDimension(R.dimen.text_size));
 
-        findViewById(R.id.neededButton).setOnLongClickListener(listener);
+        findViewById(R.id.neededButton).setOnClickListener(clickListener);
+        findViewById(R.id.neededButton).setOnLongClickListener(longClickListener);
     }
 
     /** Binding with AppService */
@@ -76,7 +78,14 @@ public class NeededActivity extends AppCompatActivity {
         }
     };
 
-    View.OnLongClickListener listener = new View.OnLongClickListener() {
+    View.OnClickListener clickListener = new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.toast_hold), Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    View.OnLongClickListener longClickListener = new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(View v) {
             vibe.vibrate(50);

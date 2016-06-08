@@ -78,7 +78,7 @@ public class HandleMessage {
                     pushNotification = new NotificationCompat.Builder(context);
                     pushNotification.setSmallIcon(R.mipmap.ic_launcher);
                     pushNotification.setWhen(System.currentTimeMillis());
-                    pushNotification.setContentTitle(context.getResources().getString(R.string.notification_body_idle));
+                    pushNotification.setContentTitle(context.getResources().getString(R.string.notification_title_idle));
                     pushNotification.setContentText(context.getResources().getString(R.string.notification_body_idle));
                     pushNotification.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
                     pushNotification.setVibrate(pattern);
@@ -130,7 +130,7 @@ public class HandleMessage {
                     context.startActivity(dialogIntent);
                 }
                 break;
-            case "3":
+/*            case "3":
                 if (!sharedPref.getString("STATE", "ERROR").equals("NEEDED")){
                     sharedEdit.putString("STATE", States.STATES.IDLE.name());
                     sharedEdit.apply();
@@ -157,7 +157,7 @@ public class HandleMessage {
                     dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(dialogIntent);
                 }
-                break;
+                break;*/
         }
     }
 }

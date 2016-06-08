@@ -44,7 +44,7 @@ public class AppService extends Service {
     private final int       PORT = 19387;
     private final String    ADDR = "tcp://" + HOST + ":" + PORT;
     private final String    TOPIC = "foo/Santiago/Simon";
-    private final int       QOS = 0;
+    private final int       QOS = 1;
 
     /** EXTRAS for intents */
 
@@ -56,6 +56,7 @@ public class AppService extends Service {
 
     /** MQTT client declared as global to grant access for all methods */
     private MqttAsyncClient client = null;
+    private MqttConnectOptions options;
 
     /**Shared preferences variables to store sender flags and operation codes */
     private SharedPreferences sharedPref;
@@ -89,6 +90,7 @@ public class AppService extends Service {
         sharedEdit.putString("STATE", States.STATES.IDLE.name());
         sharedEdit.putBoolean("SENDER", false);
         sharedEdit.putBoolean("VOLUNTEER", false);
+        sharedEdit.putBoolean("TURNOFF", false);
         sharedEdit.putString("SIGNIFICANTOTHER", "NULL");
         sharedEdit.putString("VOLUNTEER1", "NULL");
         sharedEdit.putString("VOLUNTEER2", "NULL");
@@ -132,10 +134,10 @@ public class AppService extends Service {
         }
 
         /** Connecting MQTT client to the broker */
-        MqttConnectOptions options = new MqttConnectOptions();
+        options = new MqttConnectOptions();
         options.setUserName("abilyvga");
         options.setPassword("IVuAJDcDU8WB".toCharArray());
-        options.setKeepAliveInterval(30);
+        options.setKeepAliveInterval(600);
         try {
             client.connect(options);
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.connect_toast), Toast.LENGTH_SHORT).show();
@@ -185,6 +187,7 @@ public class AppService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+
         /** Unsubscribing */
         try {
             IMqttToken unsubToken = client.unsubscribe(TOPIC);
@@ -245,8 +248,8 @@ public class AppService extends Service {
         public void connectionLost(Throwable cause) {
             // TODO: Handle loss of connection
 
-            NotificationCompat.Builder pushNotification;
-            int pushNotiID = 7003;
+            NotificationCompat.Builder pushNotification, not, not2;
+            int pushNotiID = 7003, notID = 707, not1ID = 00000123;
 
             pushNotification = new NotificationCompat.Builder(getApplicationContext());
             pushNotification.setSmallIcon(R.mipmap.ic_launcher);
@@ -258,6 +261,38 @@ public class AppService extends Service {
 
             NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             nm.notify(pushNotiID, pushNotification.build());
+
+            sharedPref = getSharedPreferences("database",PREFERENCE_MODE_PRIVATE);
+
+            try {
+                client.connect(options);
+                client.subscribe(TOPIC, QOS);
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.subscribe_toast), Toast.LENGTH_SHORT).show();
+                connectionStatus = MQTTConnectionStatus.SUBSCRIBED;
+
+                not = new NotificationCompat.Builder(getApplicationContext());
+                not.setSmallIcon(R.mipmap.ic_launcher);
+                not.setWhen(System.currentTimeMillis());
+                not.setContentTitle("TEST");
+                not.setContentText("Could reconnect");
+                not.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+                not.setAutoCancel(true);
+
+                NotificationManager nm1 = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                nm1.notify(not1ID, not.build());
+            }
+            catch (MqttException e) {
+                not2 = new NotificationCompat.Builder(getApplicationContext());
+                not2.setSmallIcon(R.mipmap.ic_launcher);
+                not2.setWhen(System.currentTimeMillis());
+                not2.setContentTitle("TEST");
+                not2.setContentText("Couldnt reconnect");
+                not2.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+                not2.setAutoCancel(true);
+
+                NotificationManager nm2 = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                nm2.notify(notID, not2.build());
+            }
         }
 
         /** Here is handled the arrival of a message from broker */
@@ -284,3 +319,4 @@ public class AppService extends Service {
         }
     }
 }
+

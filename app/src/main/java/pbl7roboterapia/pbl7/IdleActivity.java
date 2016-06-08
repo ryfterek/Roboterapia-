@@ -2,7 +2,6 @@ package pbl7roboterapia.pbl7;
 
 import android.app.NotificationManager;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
@@ -14,8 +13,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class IdleActivity extends AppCompatActivity {
 
@@ -51,7 +50,8 @@ public class IdleActivity extends AppCompatActivity {
         textView.setText(text);
         textView.setTextSize(getResources().getDimension(R.dimen.text_size));
 
-        findViewById(R.id.idleButton).setOnLongClickListener(listener);
+        findViewById(R.id.idleButton).setOnClickListener(clickListener);
+        findViewById(R.id.idleButton).setOnLongClickListener(longClickListener);
     }
 
     /** Enabling an overlay menu */
@@ -132,7 +132,14 @@ public class IdleActivity extends AppCompatActivity {
 
     /** Cycling to the <NEXT STATE> & sending a message to MQTT broker*/
 
-    View.OnLongClickListener listener = new View.OnLongClickListener() {
+    View.OnClickListener clickListener = new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.toast_hold), Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    View.OnLongClickListener longClickListener = new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(View v) {
             vibe.vibrate(50);
