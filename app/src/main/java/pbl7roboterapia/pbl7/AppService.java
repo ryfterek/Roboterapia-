@@ -93,7 +93,7 @@ public class AppService extends Service {
         sharedEdit.putString("VOLUNTEER1", "NULL");
         sharedEdit.putString("VOLUNTEER2", "NULL");
         sharedEdit.apply();
-        Toast.makeText(getApplicationContext(), "App reset and ready", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), "App reset and ready", Toast.LENGTH_LONG).show();
 
         /** Initial WiFi check */
         try {
@@ -128,7 +128,7 @@ public class AppService extends Service {
             connectionStatus = MQTTConnectionStatus.CREATED;
         }
         catch (MqttException e) {
-            Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_client_toast), Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_client_toast), Toast.LENGTH_LONG).show();
         }
 
         /** Connecting MQTT client to the broker */
@@ -138,23 +138,23 @@ public class AppService extends Service {
         options.setKeepAliveInterval(3600);
         try {
             client.connect(options);
-            Toast.makeText(getApplicationContext(), getResources().getString(R.string.connect_toast), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), getResources().getString(R.string.connect_toast), Toast.LENGTH_SHORT).show();
             /** Short sleep added as connection needs some time before app can subscribe to a topic */
             SystemClock.sleep(500);
             connectionStatus = MQTTConnectionStatus.CONNECTED;
         }
         catch (MqttException e) {
-            Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_connect_toast), Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_connect_toast), Toast.LENGTH_LONG).show();
         }
 
         /** Subscribing MQTT client to the topic */
         try {
             client.subscribe(TOPIC, QOS);
-            Toast.makeText(getApplicationContext(), getResources().getString(R.string.subscribe_toast), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), getResources().getString(R.string.subscribe_toast), Toast.LENGTH_SHORT).show();
             connectionStatus = MQTTConnectionStatus.SUBSCRIBED;
         }
         catch (MqttException e) {
-            Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_subscribe_toast), Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_subscribe_toast), Toast.LENGTH_LONG).show();
         }
 
         /** Setting up an ongoing notification to 1) remind users that the app is running 2) alert them if the service stopped */
@@ -195,7 +195,7 @@ public class AppService extends Service {
             unsubToken.setActionCallback(new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
-                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.unsubscribe_toast), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), getResources().getString(R.string.unsubscribe_toast), Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
@@ -213,7 +213,7 @@ public class AppService extends Service {
             disconToken.setActionCallback(new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
-                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.disconnect_toast), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), getResources().getString(R.string.disconnect_toast), Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
