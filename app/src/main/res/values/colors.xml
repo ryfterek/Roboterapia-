@@ -12,8 +12,8 @@
     <color name="alarmPrimaryDark">#FFA000</color>
     <color name="alarmAccent">#2196F3</color>
 
-    <color name="neededPrimary">#FF0000</color>
-    <color name="neededPrimaryDark">#B40404</color>
+    <color name="neededPrimary">#F44336</color>
+    <color name="neededPrimaryDark">#D32F2F</color>
     <color name="neededAccent">#4CAF50</color>
 
     <color name="volunteerPrimary">#4CAF50</color>
