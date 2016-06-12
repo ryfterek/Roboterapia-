@@ -8,16 +8,19 @@
     <!-- Strings for IdleActivity -->
     <string name="prompt_welcome">Hello,\u0020</string>
     <string name="prompt_all_ok">Is everything all right?</string>
+    <string name="button_text_idle">HELP</string>
 
     <!-- Strings for AlarmActivity -->
     <string name="prompt_calm">Keep calm\u0020</string>
     <string name="prompt_incoming">We have alarmed everybody.</string>
     <string name="prompt_waiting">Waiting for a volunteer.</string>
     <string name="prompt_volunteer">\u0020is coming to help.</string>
+    <string name="button_text_alarm">THANKS</string>
 
     <!-- Strings for NeededActivity -->
     <string name="prompt_warning">Attention!\u0020</string>
     <string name="prompt_help">\u0020needs your help.</string>
+    <string name="button_text_needed">COMING</string>
 
     <!-- Strings for VolunteerActivity -->
     <string name="prompt_thank">Thank you for volunteering to help\u0020</string>

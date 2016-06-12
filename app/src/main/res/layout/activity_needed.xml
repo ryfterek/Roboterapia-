@@ -16,7 +16,10 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/neededButton"/>
+        android:id="@+id/neededButton"
+        android:text="@string/button_text_needed"
+        android:textColor="@color/white"
+        android:textSize="32dp"/>
 
     <TextView
         android:layout_width="wrap_content"

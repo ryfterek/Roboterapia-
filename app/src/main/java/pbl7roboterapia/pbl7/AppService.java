@@ -135,7 +135,7 @@ public class AppService extends Service {
         options = new MqttConnectOptions();
         options.setUserName("abilyvga");
         options.setPassword("IVuAJDcDU8WB".toCharArray());
-        options.setKeepAliveInterval(3600);
+        options.setKeepAliveInterval(300);
         try {
             client.connect(options);
             //Toast.makeText(getApplicationContext(), getResources().getString(R.string.connect_toast), Toast.LENGTH_SHORT).show();

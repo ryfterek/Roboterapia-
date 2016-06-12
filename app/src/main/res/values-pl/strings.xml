@@ -40,7 +40,7 @@
     <string name="notification_title_idle">Kłopot zażegnany!</string>
     <string name="notification_title_volunteer">\u0020śpieszy Ci z pomocą!</string>
     <string name="ongoing_text">Służymy pomocą.</string>
-    <string name="prompt_help">\potrzebuje Twojej pomocy.</string>
+    <string name="prompt_help">\u0020potrzebuje Twojej pomocy.</string>
     <string name="prompt_thank">Dziękujemy, że pomagasz\u0020</string>
     <string name="prompt_volunteer">\u0020śpieszy Ci z pomocą.</string>
     <string name="prompt_waiting">Poczekaj na ochotnika.</string>
@@ -52,5 +52,8 @@
     <string name="disconnect_positive">Połącz ponownie </string>
     <string name="disconnect_negative">Zamknij aplikację</string>
     <string name="disconnect_body">Wygląda na to, że jakieś chochliki rozłączyły nas z serwerem. Spróbujmy połączyć się ponownie, dobrze?</string>
+    <string name="button_text_alarm">DZIĘKUJĘ</string>
+    <string name="button_text_idle">POMOCY</string>
+    <string name="button_text_needed">JUŻ IDĘ</string>
 
 </resources>
